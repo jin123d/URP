@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group>
+
+        <item
+            android:id="@+id/navItem1"
+            android:icon="@mipmap/ic_settings_grey600_48dp"
+            android:title="@string/action_settings"/>
+
+        <item
+            android:id="@+id/navItem2"
+            android:icon="@mipmap/ic_color_lens_grey600_48dp"
+            android:title="@string/title_activity_change_color"/>
+
+        <item
+            android:id="@+id/navItem4"
+            android:icon="@mipmap/tcdl_2"
+            android:title="@string/tcdl"/>
+
+    </group>
+
+
+    <item android:title="@string/other">
+        <menu>
+            <item
+                android:id="@+id/navItem3"
+                android:icon="@mipmap/ic_help_grey600_48dp"
+                android:title="@string/action_about"/>
+
+        </menu>
+    </item>
+
+
+</menu>

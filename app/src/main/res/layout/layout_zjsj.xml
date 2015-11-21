@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="@dimen/abc_action_bar_content_inset_material"
+                android:paddingRight="@dimen/abc_action_bar_content_inset_material"
+                android:layout_height="wrap_content">
+
+    <TextView
+        android:textSize="15dp"
+        android:text="名称"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/tv_mc"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:text="备注"
+        android:gravity="center"
+        android:id="@+id/tv_bz"
+        android:layout_marginRight="46dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@id/tv_xf"
+        android:layout_toStartOf="@id/tv_xf"
+        android:layout_marginEnd="46dp"
+        android:layout_alignBottom="@id/tv_mc"/>
+
+    <TextView
+        android:text="学分"
+        android:gravity="center"
+        android:layout_alignParentRight="true"
+        android:id="@+id/tv_xf"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignBottom="@id/tv_bz"/>
+
+</RelativeLayout>
