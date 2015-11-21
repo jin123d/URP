@@ -14,19 +14,21 @@ TYUT_URP 第三方客户端
 ![github](http://www.jin123d.com/wp-content/uploads/2015/09/32-169x300.png "github")  ![github](http://www.jin123d.com/wp-content/uploads/2015/09/device-2015-11-17-131940-169x300.png "github")  ![github](http://www.jin123d.com/wp-content/uploads/2015/09/QQ%E6%88%AA%E5%9B%BE20151117132823-170x300.png "github")  
 
 ## 开发进度
-### v_0.1
+###  v_0.1
 > * 登录urp
 > * 获取及格成绩、个人信息、自主实践、学分绩点
 > * 记住密码、自动登录功能
 > * 退出登录功能
 > * 及格成绩和自主实践采用baseAdapter
-### v_0.2
+-----------------------------------  
+###  v_0.2
 > *  （增加）获取验证码时将验证码输入框置空
 > * （更新）界面主题更换为DarkActionbar
 > * （增加）退出登录加入提示
 > * （增加）增加父级Activity
 > * （增加）双击退出，防止误操作
-### v_0.3
+-----------------------------------  
+###  v_0.3
 
 ## 我的网站  
 http://www.jin123d.com 
