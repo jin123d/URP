@@ -9,6 +9,12 @@ TYUT_URP 第三方客户端
 - [x] 一键评教（实现）注:目前只针对中期评教
 - [x] 通知公告（实现）注:UI需要改进
 
+## 项目范围
+> * 网络请求
+> * JSOUP解析
+> * 验证码Cookie
+> * Session验证
+> *  本地数据报错
 ## 截图预览
 ![github](http://www.jin123d.com/wp-content/uploads/2015/09/device-2015-11-17-131737-169x300.png "github")    ![github](http://www.jin123d.com/wp-content/uploads/2015/09/device-2015-11-17-132020-169x300.png "github")  ![github](http://www.jin123d.com/wp-content/uploads/2015/09/device-2015-11-17-120028-169x300.png "github")  
 ![github](http://www.jin123d.com/wp-content/uploads/2015/09/32-169x300.png "github")  ![github](http://www.jin123d.com/wp-content/uploads/2015/09/device-2015-11-17-131940-169x300.png "github")  ![github](http://www.jin123d.com/wp-content/uploads/2015/09/QQ%E6%88%AA%E5%9B%BE20151117132823-170x300.png "github")  
