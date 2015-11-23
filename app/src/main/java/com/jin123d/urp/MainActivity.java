@@ -113,6 +113,8 @@ public class MainActivity extends AppCompatActivity implements GetNetData {
 
         progressDialog = new ProgressDialog(MainActivity.this);
         progressDialog.setMessage(getString(R.string.getUserData));
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setCancelable(false);
         progressDialog.show();
         /**
          * 初始化各种控件

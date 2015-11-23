@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -83,7 +84,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     break;
                 case urlUtil.DATA_SUCCESS:
                     if (tv == null) {
-                        System.out.println("空");
+                        Log.d("login","获取到的内容为空");
                     } else {
                         Document doc = Jsoup.parse(tv);
                         String title = doc.title();
@@ -102,9 +103,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 sp.setAuto(true);
                             }
                             sp.setCookie(cookie);
-                            Intent intent = new Intent();
-                            intent.setClass(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
+                            startActivity(new Intent(LoginActivity.this,MainActivity.class));
                             finish();
                         } else if (getText(R.string.webTitle).equals(title)) {
                             String error = doc.select("[class=errorTop]").text();
@@ -117,6 +116,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 case urlUtil.YZM_FAIL:
                     Snackbar.make(lin_main, getText(R.string.getYzmFail), Snackbar.LENGTH_SHORT)
                             .show();
+                    progressBar.setVisibility(View.INVISIBLE);
                     break;
                 case urlUtil.SESSION:
                     Toast.makeText(LoginActivity.this, getString(R.string.loginFail), Toast.LENGTH_SHORT).show();
@@ -167,6 +167,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressBar = (ProgressBar) findViewById(R.id.pgb_yzm);
         progressDialog = new ProgressDialog(LoginActivity.this);
         progressDialog.setMessage(getText(R.string.logining));
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
         //shapeLoadingDialog =new ShapeLoadingDialog(this);
         //shapeLoadingDialog.setLoadingText("加载中...");
         btn_login.setOnClickListener(this);

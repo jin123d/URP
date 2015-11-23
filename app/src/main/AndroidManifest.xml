@@ -20,11 +20,8 @@
         android:label="@string/appname"
         android:theme="@style/AppTheme">
         <meta-data
-            android:name="BaiduMobAd_STAT_ID"
+            android:name="BDAPPKEY"
             android:value="0a1970df79"/>
-        <meta-data
-            android:name="BaiduMobAd_CHANNEL"
-            android:value="jin123d"/>
 
         <activity
             android:name=".LoginActivity"
