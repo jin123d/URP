@@ -237,7 +237,7 @@ public class MainActivity extends AppCompatActivity implements GetNetData {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             if ((System.currentTimeMillis() - exitTime) > 2000) {
-                Toast.makeText(this, getString(R.string.doubleBack), Toast.LENGTH_SHORT).show();
+                Snackbar.make(listView, R.string.doubleBack, Snackbar.LENGTH_SHORT).show();
                 exitTime = System.currentTimeMillis();
             } else {
                 finish();
