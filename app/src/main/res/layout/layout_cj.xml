@@ -2,46 +2,44 @@
 
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:orientation="vertical"
-              android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <RelativeLayout
-        android:paddingTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:paddingBottom="5dp"
         android:paddingLeft="@dimen/abc_action_bar_content_inset_material"
         android:paddingRight="@dimen/abc_action_bar_content_inset_material"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:paddingTop="5dp">
 
         <TextView
-            android:textSize="15dp"
-            android:text="课程名称"
-            android:layout_alignParentLeft="true"
             android:id="@+id/tv_kcm"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"/>
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:gravity="left"
+            android:text="课程名称" />
 
         <TextView
-            android:text="学分"
-            android:gravity="center"
             android:id="@+id/tv_xf"
-            android:layout_marginRight="50dp"
-            android:layout_width="50dp"
-            android:layout_alignParentTop="true"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="70dp"
+            android:layout_toLeftOf="@+id/tv_cj"
             android:layout_toStartOf="@+id/tv_cj"
-            android:layout_alignBottom="@+id/tv_kcm"/>
+            android:gravity="center"
+            android:text="学分" />
 
         <TextView
-            android:text="成绩"
-            android:gravity="center"
-            android:layout_alignParentRight="true"
             android:id="@+id/tv_cj"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_alignBottom="@+id/tv_xf"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_xf"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:text="成绩" />
 
     </RelativeLayout>
 </LinearLayout>

@@ -120,13 +120,6 @@ public class CjBjgFragment extends Fragment implements GetNetData {
         new Thread() {
             public void run() {
                 netUtil.getPostData(urlUtil.URL + urlUtil.URL_BJG, cookie, CjBjgFragment.this);
-               /* if (urlUtil.NET_FAIL.equals(tv)) {
-                    handler.sendEmptyMessage(urlUtil.DATA_FAIL);
-                } else if (urlUtil.SESSION_FAIL.equals(tv)) {
-                    handler.sendEmptyMessage(urlUtil.SESSION);
-                } else {
-                    handler.sendEmptyMessage(urlUtil.DATA_SUCCESS);
-                }*/
             }
         }.start();
     }
