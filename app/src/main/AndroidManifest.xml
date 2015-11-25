@@ -2,17 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jin123d.urp">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.GET_TASKS"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <application
         android:allowBackup="true"
@@ -21,94 +21,73 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="BDAPPKEY"
-            android:value="0a1970df79"/>
+            android:value="0a1970df79" />
 
         <activity
             android:name=".LoginActivity"
             android:label="@string/appname">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main">
-        </activity>
+            android:label="@string/title_activity_main"></activity>
         <activity
             android:name=".XjxxActivity"
-            android:label="@string/title_activity_xjxx"
-            >
-        </activity>
+            android:label="@string/title_activity_xjxx"></activity>
         <activity
             android:name=".XfjdActivity"
-            android:label="@string/title_activity_xfjd"
-            >
-        </activity>
+            android:label="@string/title_activity_xfjd"></activity>
         <activity
             android:name=".ZjsjActivity"
-            android:label="@string/title_activity_zjsj"
-            >
-        </activity>
+            android:label="@string/title_activity_zjsj"></activity>
         <activity
             android:name=".KbActivity"
-            android:label="@string/title_activity_kb"
-            >
-        </activity>
+            android:label="@string/title_activity_kb"></activity>
         <activity
             android:name=".CjActivity"
-            android:label="@string/title_activity_cj"
-            >
-        </activity>
+            android:label="@string/title_activity_cj"></activity>
         <activity
             android:name=".TzggActivity"
-            android:label="@string/title_activity_tzgg"
-            >
-        </activity>
+            android:label="@string/title_activity_tzgg"></activity>
         <activity
             android:name=".NewsActivity"
-            android:label="@string/title_activity_news"
-            >
-        </activity>
+            android:label="@string/title_activity_news"></activity>
         <activity
             android:name=".JxpgListActivity"
-            android:label="@string/title_activity_jxpg_list"
-            >
-        </activity>
+            android:label="@string/title_activity_jxpg_list"></activity>
         <activity
             android:name=".Loading"
-            android:label="@string/title_activity_loading">
-        </activity>
+            android:label="@string/title_activity_loading"></activity>
         <activity
             android:name=".WebActivity"
-            android:label="@string/title_activity_about">
-        </activity>
+            android:label="@string/title_activity_about"></activity>
         <activity
             android:name="com.baidu.autoupdatesdk.ConfirmDialoigActivity"
             android:exported="false"
             android:screenOrientation="sensor"
-            android:theme="@style/bdp_update_dialog_style_fullscreen"/>
+            android:theme="@style/bdp_update_dialog_style_fullscreen" />
 
         <receiver
             android:name="com.baidu.autoupdatesdk.receiver.BDBroadcastReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.baidu.autoupdatesdk.ACTION_NEW_UPDATE"/>
-                <action android:name="com.baidu.autoupdatesdk.ACTION_DOWNLOAD_COMPLETE"/>
-                <action android:name="com.baidu.autoupdatesdk.ACTION_NEW_AS"/>
-                <action android:name="com.baidu.autoupdatesdk.ACTION_AS_DOWNLOAD_COMPLETE"/>
+                <action android:name="com.baidu.autoupdatesdk.ACTION_NEW_UPDATE" />
+                <action android:name="com.baidu.autoupdatesdk.ACTION_DOWNLOAD_COMPLETE" />
+                <action android:name="com.baidu.autoupdatesdk.ACTION_NEW_AS" />
+                <action android:name="com.baidu.autoupdatesdk.ACTION_AS_DOWNLOAD_COMPLETE" />
             </intent-filter>
         </receiver>
 
         <activity
             android:name=".ChangeColor"
-            android:label="@string/title_activity_change_color">
-        </activity>
+            android:label="@string/title_activity_change_color"></activity>
         <activity
             android:name=".AboutActivity"
-            android:label="@string/title_activity_about">
-        </activity>
+            android:label="@string/title_activity_about"></activity>
     </application>
 
 </manifest>

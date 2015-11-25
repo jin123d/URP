@@ -14,5 +14,6 @@
     <dimen name="expanded_toolbar_title_margin_start">64dp</dimen>
 
     <dimen name="nav_header_text_margin_left">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 </resources>

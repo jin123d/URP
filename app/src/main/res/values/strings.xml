@@ -49,5 +49,6 @@
     <string name="title_activity_change_color">主题选择</string>
     <string name="other">其他</string>
     <string name="thanks"> 感谢:\n\nAndroid\nJsoup\n百度统计\nTYUT综合教务系统</string>
+    <string name="title_activity_test">TestActivity</string>
 
 </resources>
