@@ -57,6 +57,8 @@ public class TzggActivity extends AppCompatActivity{
         });
         progressDialog = new ProgressDialog(TzggActivity.this);
         progressDialog.setMessage(getString(R.string.getData));
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setCancelable(false);
         progressDialog.show();
         listView = (ListView) findViewById(R.id.lv_news);
         lists = new ArrayList<>();

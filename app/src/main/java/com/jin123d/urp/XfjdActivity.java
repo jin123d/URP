@@ -107,6 +107,8 @@ public class XfjdActivity extends AppCompatActivity implements GetNetData {
         });
         progressDialog = new ProgressDialog(XfjdActivity.this);
         progressDialog.setMessage(getString(R.string.getData));
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setCancelable(false);
         progressDialog.show();
         tv_1 = (TextView) findViewById(R.id.tv_1);
         tv_2 = (TextView) findViewById(R.id.tv_2);

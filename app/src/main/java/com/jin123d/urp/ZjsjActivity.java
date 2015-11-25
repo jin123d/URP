@@ -145,6 +145,8 @@ public class ZjsjActivity extends AppCompatActivity implements GetNetData {
         lv_zjsj = (ListView) findViewById(R.id.lv_zjsj);
         progressDialog = new ProgressDialog(ZjsjActivity.this);
         progressDialog.setMessage(getString(R.string.getData));
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setCancelable(false);
         progressDialog.show();
         lists = new ArrayList<>();
         adapter = new ZjsjAdapter(lists, ZjsjActivity.this);

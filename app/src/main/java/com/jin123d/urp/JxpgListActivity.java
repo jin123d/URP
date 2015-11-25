@@ -135,6 +135,8 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetData {
         dialog.setTitle("一键评估");
         dialog.setMessage("是否进行一键评估,可能会耗时几分钟，请耐心等待");
         progressDialog.setMessage(getString(R.string.getData));
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setCancelable(false);
         progressDialog.show();
         lists = new ArrayList<>();
         list_pg = new ArrayList<>();
