@@ -102,6 +102,8 @@ public class XjxxActivity extends AppCompatActivity implements GetNetData, GetZp
         getInfo();
         progressDialog = new ProgressDialog(XjxxActivity.this);
         progressDialog.setMessage(getString(R.string.getData));
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setCancelable(false);
         progressDialog.show();
     }
 

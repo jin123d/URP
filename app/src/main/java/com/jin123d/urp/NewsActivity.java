@@ -56,6 +56,8 @@ public class NewsActivity extends AppCompatActivity{
         });
         progressDialog = new ProgressDialog(NewsActivity.this);
         progressDialog.setMessage(getString(R.string.getData));
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setCancelable(false);
         progressDialog.show();
         textView = (TextView) findViewById(R.id.tv_html);
 

@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements GetNetData {
         lists = new ArrayList<>();
         adapter = new MianAdapter(lists, MainActivity.this);
         listView.setAdapter(adapter);
-        mainModele = new MainModels[7];
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements GetNetData {
                         break;
                     case 4:
                         //本学期课表
-                        Snackbar.make(listView, "开发中", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(listView, "开发中1111", Snackbar.LENGTH_SHORT).show();
                         // start(KbActivity.class);
                         break;
                     case 5:
@@ -211,6 +211,7 @@ public class MainActivity extends AppCompatActivity implements GetNetData {
     }
 
     private void getData() {
+        mainModele = new MainModels[7];
         mainModele[0] = new MainModels(String.valueOf(R.mipmap.xjxx_2), getString(R.string.title_activity_xjxx));
         mainModele[1] = new MainModels(String.valueOf(R.mipmap.cj_2), getString(R.string.cj));
         mainModele[2] = new MainModels(String.valueOf(R.mipmap.zzsj_2), getString(R.string.title_activity_zjsj));
