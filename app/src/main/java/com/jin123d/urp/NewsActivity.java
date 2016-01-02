@@ -7,6 +7,7 @@ import android.os.Message;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -39,6 +40,7 @@ public class NewsActivity extends AppCompatActivity{
         setContentView(R.layout.activity_news);
         Intent intent = getIntent();
         URL = intent.getStringExtra("URL");
+        Log.d("url",URL);
         initView();
         getInfo();
     }
@@ -64,8 +66,9 @@ public class NewsActivity extends AppCompatActivity{
             public void run() {
                 try {
                     Document document = Jsoup.connect(urlUtil.URL_JWC + URL).timeout(5000).get();
-                    Elements es = document.select("[id=ctl00_ContentPlaceHolder1_DIV1]");
+                    Elements es = document.select("td[align=left]");
                     tv = es.text();
+
                     handler.sendEmptyMessage(1);
                 } catch (IOException e) {
                     e.printStackTrace();

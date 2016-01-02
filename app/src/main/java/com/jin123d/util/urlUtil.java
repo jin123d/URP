@@ -33,7 +33,7 @@ public class urlUtil {
     //不及格成绩
     public final static String URL_BJG = "gradeLnAllAction.do?type=ln&oper=bjg";
     //通知公告
-    public final static String URL_TZGG = "/likelist.aspx?bigname=13&=&like=&page=1";
+    public final static String URL_TZGG = "detail.asp?bigid=7";
     //jwc网站
     public final static String URL_JWC = "http://jwc.tyut.edu.cn/";
     //评教列表

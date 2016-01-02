@@ -7,10 +7,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.jin123d.models.TzggModels;
 import com.jin123d.util.urlUtil;
@@ -72,6 +74,13 @@ public class TzggActivity extends AppCompatActivity{
                 startActivity(intent);
             }
         });
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(TzggActivity.this,list_tz.get(i).getUrl(),Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
     }
 
     public void getInfo() {
@@ -79,9 +88,11 @@ public class TzggActivity extends AppCompatActivity{
             public void run() {
                 try {
                     Document document = Jsoup.connect(urlUtil.URL_JWC + urlUtil.URL_TZGG).timeout(5000).get();
-                    Elements es = document.select("[target=V2]");
+                    Elements es = document.select("[style=height: 310px]").select("table[align=center]");
+                    Log.d("内容",es.toString());
                     for (int i = 0; i < es.size(); i++) {
                         String linkHref = es.get(i).attr("href");
+                        Log.d("网址",linkHref);
                         String title = es.get(i).text();
                         lists.add(title);
                         TzggModels tzggModels = new TzggModels(title, linkHref);
