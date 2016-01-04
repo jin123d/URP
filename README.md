@@ -15,7 +15,7 @@ TYUT_URP 第三方客户端
 > * JSOUP解析
 > * 验证码Cookie（自动登录等）
 > * Session验证
-> *  本地数据保存
+> * 本地数据保存
 > * Material Design风格
 
 ## 截图预览
@@ -23,6 +23,9 @@ TYUT_URP 第三方客户端
 ![github](http://www.jin123d.com/wp-content/uploads/2015/09/32-169x300.png "github")  ![github](http://www.jin123d.com/wp-content/uploads/2015/09/device-2015-11-17-131940-169x300.png "github")  ![github](http://www.jin123d.com/wp-content/uploads/2015/09/QQ%E6%88%AA%E5%9B%BE20151117132823-170x300.png "github")  
 
 ## 开发进度
+### v_0.98
+> * （修复）修复教务处网站改版后客户端无法获取到通知公告的BUG
+
 ### v_0.97
 > * （修复）修复成绩界面在API17下错乱的BUG
 > * （优化）优化一部分Dialog
