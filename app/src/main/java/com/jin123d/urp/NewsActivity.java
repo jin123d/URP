@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -20,7 +21,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
-public class NewsActivity extends AppCompatActivity{
+public class NewsActivity extends AppCompatActivity {
     private String tv;
     private ProgressDialog progressDialog;
     private Toolbar toolbar;
@@ -30,7 +31,12 @@ public class NewsActivity extends AppCompatActivity{
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             progressDialog.dismiss();
-            textView.setText(tv);
+            if (msg.what == 1) {
+                textView.setText(tv);
+            }else{
+                Snackbar.make(textView, "获取数据失败", Snackbar.LENGTH_SHORT).show();
+
+            }
         }
     };
 
@@ -40,7 +46,7 @@ public class NewsActivity extends AppCompatActivity{
         setContentView(R.layout.activity_news);
         Intent intent = getIntent();
         URL = intent.getStringExtra("URL");
-        Log.d("url",URL);
+        Log.d("url", URL);
         initView();
         getInfo();
     }
@@ -73,6 +79,7 @@ public class NewsActivity extends AppCompatActivity{
 
                     handler.sendEmptyMessage(1);
                 } catch (IOException e) {
+                    handler.sendEmptyMessage(2);
                     e.printStackTrace();
                 }
             }
