@@ -91,7 +91,7 @@ public class TzggActivity extends AppCompatActivity{
                 try {
                     Document document = Jsoup.connect(urlUtil.URL_JWC + urlUtil.URL_TZGG).timeout(5000).get();
                     Elements es = document.select("[style=height: 310px]").select("table[align=center]");
-                    Log.d("内容",es.toString());
+                   // Log.d("内容",es.toString());
                     for (int i = 0; i < es.size(); i++) {
                         String linkHref = es.get(i).attr("href");
                         Log.d("网址",linkHref);
