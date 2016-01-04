@@ -23,6 +23,13 @@
             android:name="BDAPPKEY"
             android:value="0a1970df79" />
 
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="568a4d2c67e58e6a9b000e8d"></meta-data>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Channel ID" />
+
         <activity
             android:name=".LoginActivity"
             android:label="@string/appname">
@@ -88,6 +95,15 @@
         <activity
             android:name=".AboutActivity"
             android:label="@string/title_activity_about"></activity>
+
+        <service
+            android:name="com.umeng.update.net.DownloadingService"
+            android:process=":DownloadingService" >
+        </service>
+        <activity
+            android:name="com.umeng.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
     </application>
 
 </manifest>

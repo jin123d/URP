@@ -32,6 +32,7 @@ import com.jin123d.models.MainModels;
 import com.jin123d.util.Sp;
 import com.jin123d.util.netUtil;
 import com.jin123d.util.urlUtil;
+import com.umeng.update.UmengUpdateAgent;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -203,6 +204,9 @@ public class MainActivity extends AppCompatActivity implements GetNetData {
                                 start(LoginActivity.class);
                             }
                         }).create().show();
+                        break;
+                    case R.id.item_update:
+                        UmengUpdateAgent.forceUpdate(MainActivity.this);
                         break;
                 }
                 return false;

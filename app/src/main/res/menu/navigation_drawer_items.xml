@@ -28,6 +28,11 @@
                 android:icon="@mipmap/ic_help_grey600_48dp"
                 android:title="@string/action_about"/>
 
+            <item
+                android:id="@+id/item_update"
+                android:icon="@mipmap/ic_file_download_grey600_48dp"
+                android:title="@string/action_update"/>
+
         </menu>
     </item>
 

@@ -1,6 +1,8 @@
 <resources>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">设置</string>
+    <string name="action_update">检查更新</string>
+
     <string name="action_about">关于</string>
     <string name="title_activity_main">URP助手</string>
     <string name="title_activity_xjxx">学籍信息</string>
