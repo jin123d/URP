@@ -72,22 +72,7 @@
         <activity
             android:name=".WebActivity"
             android:label="@string/title_activity_about"></activity>
-        <activity
-            android:name="com.baidu.autoupdatesdk.ConfirmDialoigActivity"
-            android:exported="false"
-            android:screenOrientation="sensor"
-            android:theme="@style/bdp_update_dialog_style_fullscreen" />
 
-        <receiver
-            android:name="com.baidu.autoupdatesdk.receiver.BDBroadcastReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.baidu.autoupdatesdk.ACTION_NEW_UPDATE" />
-                <action android:name="com.baidu.autoupdatesdk.ACTION_DOWNLOAD_COMPLETE" />
-                <action android:name="com.baidu.autoupdatesdk.ACTION_NEW_AS" />
-                <action android:name="com.baidu.autoupdatesdk.ACTION_AS_DOWNLOAD_COMPLETE" />
-            </intent-filter>
-        </receiver>
 
         <activity
             android:name=".ChangeColor"
@@ -95,6 +80,16 @@
         <activity
             android:name=".AboutActivity"
             android:label="@string/title_activity_about"></activity>
+
+
+        <service
+            android:name="com.umeng.update.net.DownloadingService"
+            android:process=":DownloadingService" >
+        </service>
+        <activity
+            android:name="com.umeng.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
 
 
     </application>

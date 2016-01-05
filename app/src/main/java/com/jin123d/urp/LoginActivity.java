@@ -27,6 +27,7 @@ import com.jin123d.Interface.GetZpInterface;
 import com.jin123d.util.Sp;
 import com.jin123d.util.netUtil;
 import com.jin123d.util.urlUtil;
+import com.umeng.update.UmengUpdateAgent;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -134,6 +135,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         //友盟自动更新
+        UmengUpdateAgent.setUpdateOnlyWifi(false);
+        UmengUpdateAgent.update(this);
         setTitle(getString(R.string.login));
         sp = new Sp(LoginActivity.this);
         if (sp.getAuto()) {
