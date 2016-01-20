@@ -1,12 +1,14 @@
 package com.jin123d.fragment;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,6 +67,19 @@ public class CjBjgFragment extends Fragment implements GetNetData {
                             Toast.makeText(getActivity(), getText(R.string.loginFail),
                                     Toast.LENGTH_SHORT).show();
                             getActivity().finish();
+                        } else if (getText(R.string.webTitleError).equals(doc.title())) {
+                            String ErrorContent = doc.body().text().toString();
+                            AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                            dialog.setTitle(doc.title());
+                            dialog.setMessage(ErrorContent);
+                            dialog.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    getActivity().finish();
+                                }
+                            });
+                            dialog.setCancelable(false);
+                            dialog.create().show();
                         } else {
                             Elements es = doc.select("[class=titleTop2]");
                             if (es.size() != 0) {
