@@ -238,7 +238,9 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetData {
                     params2.add(new BasicNameValuePair("wjbm", list_pg.get(position).getWjbm()));
                     params2.add(new BasicNameValuePair("bpr", list_pg.get(position).getBpr()));
                     params2.add(new BasicNameValuePair("pgnr", list_pg.get(position).getPgnr()));
-                    params2.add(new BasicNameValuePair("0000000045", "100_1"));
+                    for (int i = 24; i <= 33; i++) {
+                        params2.add(new BasicNameValuePair("00" + i, "100_1"));
+                    }
                     params2.add(new BasicNameValuePair("zgpj", getString(R.string.pgnr)));
                     Log.d("params", params2.toString());
                     login(params2);
