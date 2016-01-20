@@ -233,7 +233,7 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetData {
                     params.add(new BasicNameValuePair("pgnr", list_pg.get(position).getPgnr()));
                     params.add(new BasicNameValuePair("oper", "wjShow"));
                     loginpg(params);
-                    //评估
+                    //评估核心代码
                     List<NameValuePair> params2 = new ArrayList<>();
                     params2.add(new BasicNameValuePair("wjbm", list_pg.get(position).getWjbm()));
                     params2.add(new BasicNameValuePair("bpr", list_pg.get(position).getBpr()));
