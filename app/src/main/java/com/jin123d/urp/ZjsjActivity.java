@@ -14,10 +14,12 @@ import com.jin123d.util.netUtil;
 import com.jin123d.util.urlUtil;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -56,6 +58,19 @@ public class ZjsjActivity extends AppCompatActivity implements GetNetData {
                             Toast.makeText(ZjsjActivity.this, getString(R.string.loginFail),
                                     Toast.LENGTH_SHORT).show();
                             finish();
+                        } else if (getString(R.string.webTitleError).equals(doc.title())) {
+                            String ErrorContent = doc.body().text().toString();
+                            AlertDialog.Builder dialog = new AlertDialog.Builder(ZjsjActivity.this);
+                            dialog.setTitle(doc.title());
+                            dialog.setMessage(ErrorContent);
+                            dialog.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    ZjsjActivity.this.finish();
+                                }
+                            });
+                            dialog.setCancelable(false);
+                            dialog.create().show();
                         } else {
 
                             Elements e2 = doc.select("table");
