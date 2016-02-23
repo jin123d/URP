@@ -20,7 +20,7 @@ TyutURP 第三方客户端 v_0.99
 > * Material Design风格
 
 ## 截图预览
-![github](https://github.com/jin123d/URP/blob/master/pic/device-2015-11-17-131737.png "github")
+![github](https://github.com/jin123d/URP/blob/master/pic/device-2015-11-17-131737.png =100x20 "github")
 
 ## 开发进度
 
