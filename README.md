@@ -21,8 +21,8 @@ TyutURP 第三方客户端 v_0.99
 
 ## 截图预览
 ![github](https://github.com/jin123d/URP/blob/master/pic/device-2015-11-17-131737-169x300.png "github")
-![github](https://github.com/jin123d/URP/blob/master/pic/device-2015-11-17-132211-169x300.png "github")
 ![github](https://github.com/jin123d/URP/blob/master/pic/device-2015-11-17-132020-169x300.png "github")
+![github](https://github.com/jin123d/URP/blob/master/pic/device-2015-11-17-132211-169x300.png "github")
 
 ![github](https://github.com/jin123d/URP/blob/master/pic/device-2015-11-17-132059-169x300.png "github")
 ![github](https://github.com/jin123d/URP/blob/master/pic/device-2015-11-17-132139-169x300.png "github")
