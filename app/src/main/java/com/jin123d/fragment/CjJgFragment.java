@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -126,6 +124,7 @@ public class CjJgFragment extends Fragment implements GetNetData {
         lv_zjsj = (ListView) view.findViewById(R.id.lv_zjsj);
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage(getString(R.string.getJg));
+        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
         lists = new ArrayList<>();
         adapter = new CjAdapter(lists, getActivity());

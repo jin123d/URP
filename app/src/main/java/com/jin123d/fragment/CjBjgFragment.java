@@ -6,10 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -152,6 +150,7 @@ public class CjBjgFragment extends Fragment implements GetNetData {
         tv_sbjg = (TextView) view.findViewById(R.id.tv_sbjg);
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage(getString(R.string.getBjg));
+        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
         lists = new ArrayList<>();
         lists2 = new ArrayList<>();
