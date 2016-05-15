@@ -26,10 +26,10 @@
             android:id="@+id/tv_xf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginRight="70dp"
             android:layout_toLeftOf="@+id/tv_cj"
             android:layout_toStartOf="@+id/tv_cj"
-            android:gravity="center"
             android:text="学分" />
 
         <TextView
