@@ -45,6 +45,7 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetData {
     private List<PgInfoModels> list_pg;
     private AlertDialog.Builder dialog;
     private int i = 0;
+    private boolean zq = true;
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -238,9 +239,15 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetData {
                     params2.add(new BasicNameValuePair("wjbm", list_pg.get(position).getWjbm()));
                     params2.add(new BasicNameValuePair("bpr", list_pg.get(position).getBpr()));
                     params2.add(new BasicNameValuePair("pgnr", list_pg.get(position).getPgnr()));
-                    for (int i = 24; i <= 33; i++) {
-                        params2.add(new BasicNameValuePair("00" + i, "100_1"));
+                    
+                    if(zq){
+                        params2.add(new BasicNameValuePair("0000000045","10_1"))
+                    }else{
+                        for (int i = 24; i <= 33; i++) {
+                            params2.add(new BasicNameValuePair("00" + i, "100_1"));
+                        }
                     }
+                    
                     params2.add(new BasicNameValuePair("zgpj", getString(R.string.pgnr)));
                     Log.d("params", params2.toString());
                     login(params2);
