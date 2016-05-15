@@ -233,7 +233,7 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetData {
                     params.add(new BasicNameValuePair("bpr", list_pg.get(position).getBpr()));
                     params.add(new BasicNameValuePair("pgnr", list_pg.get(position).getPgnr()));
                     params.add(new BasicNameValuePair("oper", "wjShow"));
-                    loginpg(params);
+                    loginPg(params);
                     //评估核心代码
                     List<NameValuePair> params2 = new ArrayList<>();
                     params2.add(new BasicNameValuePair("wjbm", list_pg.get(position).getWjbm()));
@@ -241,7 +241,7 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetData {
                     params2.add(new BasicNameValuePair("pgnr", list_pg.get(position).getPgnr()));
                     
                     if(zq){
-                        params2.add(new BasicNameValuePair("0000000045","10_1"))
+                        params2.add(new BasicNameValuePair("0000000045","10_1"));
                     }else{
                         for (int i = 24; i <= 33; i++) {
                             params2.add(new BasicNameValuePair("00" + i, "100_1"));
@@ -256,7 +256,7 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetData {
         }
     }
 
-    public void loginpg(List<NameValuePair> params) {
+    public void loginPg(List<NameValuePair> params) {
         netUtil.doPost(
                 urlUtil.URL + urlUtil.URL_PG, cookie, params, new GetNetData() {
                     @Override
