@@ -1,66 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
-    <android.support.design.widget.AppBarLayout
+    <android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        android:layout_height="wrap_content">
 
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
-            app:navigationIcon="?attr/homeAsUpIndicator"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            app:navigationIcon="?attr/homeAsUpIndicator"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
         <TextView
-            android:textSize="36sp"
-            android:textColor="@android:color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="TYUT_URP助手"/>
+            android:text="TYUT_URP助手"
+            android:textColor="@android:color/white"
+            android:textSize="36sp" />
 
         <TextView
-            android:layout_marginBottom="12dp"
-            android:layout_marginTop="12dp"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            android:textSize="24sp"
             android:id="@+id/tv_verName"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="24sp" />
     </android.support.design.widget.AppBarLayout>
 
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="24dp"
-        android:textColor="@android:color/black"
-        android:text="www.jin123d.com"
         android:autoLink="web"
         android:gravity="center"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:text="www.jin123d.com"
+        android:textColor="@android:color/black" />
 
     <TextView
-        android:gravity="center|left"
-        android:textSize="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/thanks"
-        android:layout_centerVertical="true"
+
         android:layout_centerHorizontal="true"
-        />
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:text="@string/thanks"
+        android:textSize="25sp" />
 
 
 </RelativeLayout>

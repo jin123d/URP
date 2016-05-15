@@ -7,9 +7,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="drawerArrowStyle">@style/AppTheme.DrawerArrowToggle</item>
-        <item name="android:windowIsTranslucent">true</item>
     </style>
+
+    <style name="AppTheme.Statues" parent="AppTheme" />
 
     <style name="style.Bule" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowActionBar">false</item>
@@ -17,7 +17,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="drawerArrowStyle">@style/AppTheme.DrawerArrowToggle</item>
     </style>
 
     <style name="style.Red" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -26,12 +25,8 @@
         <item name="colorPrimary">@color/colorRed</item>
         <item name="colorPrimaryDark">@color/colorRedDark</item>
         <item name="colorAccent">@color/colorRed</item>
-        <item name="drawerArrowStyle">@style/AppTheme.DrawerArrowToggle</item>
     </style>
 
-    <style name="AppTheme.DrawerArrowToggle" parent="Base.Widget.AppCompat.DrawerArrowToggle">
-        <item name="color">@android:color/white</item>
-    </style>
 
     <style name="custom_dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>
