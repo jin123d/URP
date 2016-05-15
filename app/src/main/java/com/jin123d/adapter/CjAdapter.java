@@ -41,28 +41,23 @@ public class CjAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (getCount() == 0) {
-            View view = LayoutInflater.from(context).inflate(R.layout.layoutnosuch, null);
-            return view;
+        ViewHolder viewHolder = null;
+        if (convertView == null) {
+            viewHolder = new ViewHolder();
+            LayoutInflater inflater = LayoutInflater.from(context);
+            convertView = inflater.inflate(R.layout.layout_cj, null);
+            viewHolder.tv_kcm = (TextView) convertView.findViewById(R.id.tv_kcm);
+            viewHolder.tv_xf = (TextView) convertView.findViewById(R.id.tv_xf);
+            viewHolder.tv_cj = (TextView) convertView.findViewById(R.id.tv_cj);
+            convertView.setTag(viewHolder);
         } else {
-            ViewHolder viewHolder = null;
-            if (convertView == null) {
-                viewHolder = new ViewHolder();
-                LayoutInflater inflater = LayoutInflater.from(context);
-                convertView = inflater.inflate(R.layout.layout_cj, null);
-                viewHolder.tv_kcm = (TextView) convertView.findViewById(R.id.tv_kcm);
-                viewHolder.tv_xf = (TextView) convertView.findViewById(R.id.tv_xf);
-                viewHolder.tv_cj = (TextView) convertView.findViewById(R.id.tv_cj);
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
-
-            viewHolder.tv_kcm.setText(lists.get(position).getKcm());
-            viewHolder.tv_cj.setText(lists.get(position).getCj());
-            viewHolder.tv_xf.setText(lists.get(position).getXf());
-            return convertView;
+            viewHolder = (ViewHolder) convertView.getTag();
         }
+
+        viewHolder.tv_kcm.setText(lists.get(position).getKcm());
+        viewHolder.tv_cj.setText(lists.get(position).getCj());
+        viewHolder.tv_xf.setText(lists.get(position).getXf());
+        return convertView;
     }
 
     private static class ViewHolder {

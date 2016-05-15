@@ -41,30 +41,24 @@ public class ZjsjAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        if (getCount() == 0) {
-            View view = LayoutInflater.from(context).inflate(R.layout.layoutnosuch, null);
-            return view;
+        ViewHolder viewHolder = null;
+        if (convertView == null) {
+            viewHolder = new ViewHolder();
+            LayoutInflater inflater = LayoutInflater.from(context);
+            convertView = inflater.inflate(R.layout.layout_zjsj, null);
+            viewHolder.tv_mc = (TextView) convertView.findViewById(R.id.tv_mc);
+            viewHolder.tv_bz = (TextView) convertView.findViewById(R.id.tv_bz);
+            viewHolder.tv_xf = (TextView) convertView.findViewById(R.id.tv_xf);
+            convertView.setTag(viewHolder);
         } else {
-            ViewHolder viewHolder = null;
-            if (convertView == null) {
-                viewHolder = new ViewHolder();
-                LayoutInflater inflater = LayoutInflater.from(context);
-                convertView = inflater.inflate(R.layout.layout_zjsj, null);
-                viewHolder.tv_mc = (TextView) convertView.findViewById(R.id.tv_mc);
-                viewHolder.tv_bz = (TextView) convertView.findViewById(R.id.tv_bz);
-                viewHolder.tv_xf = (TextView) convertView.findViewById(R.id.tv_xf);
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
-
-
-            viewHolder.tv_mc.setText(lists.get(position).getMc());
-            viewHolder.tv_bz.setText(lists.get(position).getBz());
-            viewHolder.tv_xf.setText(lists.get(position).getXf());
-            return convertView;
+            viewHolder = (ViewHolder) convertView.getTag();
         }
+
+
+        viewHolder.tv_mc.setText(lists.get(position).getMc());
+        viewHolder.tv_bz.setText(lists.get(position).getBz());
+        viewHolder.tv_xf.setText(lists.get(position).getXf());
+        return convertView;
 
     }
 

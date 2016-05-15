@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by jin123d on 2015/11/7.
  */
-public class JxpgAdapter  extends BaseAdapter{
+public class JxpgAdapter extends BaseAdapter {
 
     private List<JxpgModels> lists;
     private Context context;
@@ -42,28 +42,23 @@ public class JxpgAdapter  extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (getCount() == 0) {
-            View view = LayoutInflater.from(context).inflate(R.layout.layoutnosuch, null);
-            return view;
+        ViewHolder viewHolder = null;
+        if (convertView == null) {
+            viewHolder = new ViewHolder();
+            LayoutInflater inflater = LayoutInflater.from(context);
+            convertView = inflater.inflate(R.layout.layout_jxpg, null);
+            viewHolder.tv_pgnr = (TextView) convertView.findViewById(R.id.tv_kcm);
+            viewHolder.tv_phr = (TextView) convertView.findViewById(R.id.tv_xf);
+            viewHolder.tv_sfpg = (TextView) convertView.findViewById(R.id.tv_cj);
+            convertView.setTag(viewHolder);
         } else {
-            ViewHolder viewHolder = null;
-            if (convertView == null) {
-                viewHolder = new ViewHolder();
-                LayoutInflater inflater = LayoutInflater.from(context);
-                convertView = inflater.inflate(R.layout.layout_jxpg, null);
-                viewHolder.tv_pgnr = (TextView) convertView.findViewById(R.id.tv_kcm);
-                viewHolder.tv_phr = (TextView) convertView.findViewById(R.id.tv_xf);
-                viewHolder.tv_sfpg = (TextView) convertView.findViewById(R.id.tv_cj);
-                convertView.setTag(viewHolder);
-            } else {
-                viewHolder = (ViewHolder) convertView.getTag();
-            }
-
-            viewHolder.tv_pgnr.setText(lists.get(position).getPgnr());
-            viewHolder.tv_phr.setText(lists.get(position).getBprm());
-            viewHolder.tv_sfpg.setText(lists.get(position).getSfpg());
-            return convertView;
+            viewHolder = (ViewHolder) convertView.getTag();
         }
+
+        viewHolder.tv_pgnr.setText(lists.get(position).getPgnr());
+        viewHolder.tv_phr.setText(lists.get(position).getBprm());
+        viewHolder.tv_sfpg.setText(lists.get(position).getSfpg());
+        return convertView;
     }
 
     private static class ViewHolder {
