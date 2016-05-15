@@ -7,9 +7,14 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:colorControlHighlight">@color/colorAccent</item>
         <item name="drawerArrowStyle">@style/AppTheme.DrawerArrowToggle</item>
         <item name="android:windowIsTranslucent">true</item>
+
+    </style>
+
+
+    <style name="AppTheme.Statues">
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="style.Bule" parent="Theme.AppCompat.Light.DarkActionBar">

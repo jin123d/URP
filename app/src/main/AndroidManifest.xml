@@ -41,55 +41,54 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main"></activity>
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.Statues" />
         <activity
             android:name=".XjxxActivity"
-            android:label="@string/title_activity_xjxx"></activity>
+            android:label="@string/title_activity_xjxx" />
         <activity
             android:name=".XfjdActivity"
-            android:label="@string/title_activity_xfjd"></activity>
+            android:label="@string/title_activity_xfjd" />
         <activity
             android:name=".ZjsjActivity"
-            android:label="@string/title_activity_zjsj"></activity>
+            android:label="@string/title_activity_zjsj" />
         <activity
             android:name=".KbActivity"
-            android:label="@string/title_activity_kb"></activity>
+            android:label="@string/title_activity_kb" />
         <activity
             android:name=".CjActivity"
-            android:label="@string/title_activity_cj"></activity>
+            android:label="@string/title_activity_cj" />
         <activity
             android:name=".TzggActivity"
-            android:label="@string/title_activity_tzgg"></activity>
+            android:label="@string/title_activity_tzgg" />
         <activity
             android:name=".NewsActivity"
-            android:label="@string/title_activity_news"></activity>
+            android:label="@string/title_activity_news" />
         <activity
             android:name=".JxpgListActivity"
-            android:label="@string/title_activity_jxpg_list"></activity>
+            android:label="@string/title_activity_jxpg_list" />
         <activity
             android:name=".Loading"
-            android:label="@string/title_activity_loading"></activity>
+            android:label="@string/title_activity_loading" />
         <activity
             android:name=".WebActivity"
-            android:label="@string/title_activity_about"></activity>
+            android:label="@string/title_activity_about" />
 
 
         <activity
             android:name=".ChangeColor"
-            android:label="@string/title_activity_change_color"></activity>
+            android:label="@string/title_activity_change_color" />
         <activity
             android:name=".AboutActivity"
-            android:label="@string/title_activity_about"></activity>
+            android:label="@string/title_activity_about" />
 
 
         <service
             android:name="com.umeng.update.net.DownloadingService"
-            android:process=":DownloadingService" >
-        </service>
+            android:process=":DownloadingService"></service>
         <activity
             android:name="com.umeng.update.UpdateDialogActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-        </activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
 
 
     </application>
