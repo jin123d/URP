@@ -25,7 +25,7 @@
 
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="568a4d2c67e58e6a9b000e8d"></meta-data>
+            android:value="568a4d2c67e58e6a9b000e8d" />
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="Channel ID" />
@@ -85,10 +85,10 @@
 
         <service
             android:name="com.umeng.update.net.DownloadingService"
-            android:process=":DownloadingService"></service>
+            android:process=":DownloadingService" />
         <activity
             android:name="com.umeng.update.UpdateDialogActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
 
     </application>

@@ -233,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements GetNetData {
     void start(Class cls) {
         Intent intent = new Intent();
         // intent.putExtra("cookie", cookie);
-        intent.setClass(getApplicationContext(), cls);
+        intent.setClass(MainActivity.this, cls);
         startActivity(intent);
     }
 
