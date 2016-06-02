@@ -31,7 +31,7 @@
             android:id="@+id/tv_verName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="20dp"
             android:layout_marginTop="12dp"
             android:gravity="center"
             android:textColor="@android:color/white"
@@ -44,10 +44,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="24dp"
-        android:autoLink="web"
         android:gravity="center"
-        android:text="www.jin123d.com"
-        android:textColor="@android:color/black" />
+        android:text="高婷霞毕业设计"
+        android:textColor="@android:color/black"
+        android:visibility="visible" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -55,9 +55,8 @@
 
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:gravity="center"
         android:text="@string/thanks"
-        android:textSize="25sp" />
+        android:textSize="20sp" />
 
 
 </RelativeLayout>

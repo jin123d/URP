@@ -240,18 +240,25 @@ public class MainActivity extends AppCompatActivity implements GetNetData {
     private long exitTime = 0;
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-            if ((System.currentTimeMillis() - exitTime) > 2000) {
-                Snackbar.make(listView, R.string.doubleBack, Snackbar.LENGTH_SHORT).show();
-                exitTime = System.currentTimeMillis();
-            } else {
-                finish();
-                System.exit(0);
-            }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
             return true;
+        } else {
+            if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+                if ((System.currentTimeMillis() - exitTime) > 2000) {
+                    Snackbar.make(listView, R.string.doubleBack, Snackbar.LENGTH_SHORT).show();
+                    exitTime = System.currentTimeMillis();
+                } else {
+                    finish();
+                    System.exit(0);
+                }
+                return true;
+            }
         }
         return super.onKeyDown(keyCode, event);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

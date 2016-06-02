@@ -34,11 +34,11 @@
 
         <TextView
             android:id="@+id/tv_cj"
+            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/tv_xf"
             android:layout_alignParentRight="true"
-            android:gravity="center"
             android:text="成绩" />
 
     </RelativeLayout>

@@ -5,23 +5,28 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <LinearLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-
-        <include layout="@layout/layout_title" />
-
-        <ListView
-            android:id="@+id/lv_main"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@drawable/list_item_divider"
-            android:dividerHeight="0.5dp"
-            android:footerDividersEnabled="false" />
+            android:orientation="vertical">
 
-    </LinearLayout>
+
+            <include layout="@layout/layout_title" />
+
+            <ListView
+                android:id="@+id/lv_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@drawable/list_item_divider"
+                android:dividerHeight="0.5dp"
+                android:footerDividersEnabled="false" />
+
+        </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation"

@@ -50,7 +50,7 @@
     <string name="title_activity_about">关于</string>
     <string name="title_activity_change_color">主题选择</string>
     <string name="other">其他</string>
-    <string name="thanks">高婷霞毕业设计</string>
+    <string name="thanks"> 技术支持:\n\nJsoup\nTYUT综合教务系统</string>
     <string name="title_activity_test">TestActivity</string>
 
 </resources>

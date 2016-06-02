@@ -133,8 +133,8 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetData {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_car);
         //  fab.attachToListView(lv_jxpg);
         dialog = new AlertDialog.Builder(JxpgListActivity.this);
-        dialog.setTitle("一键评估");
-        dialog.setMessage("是否进行一键评估,可能会耗时几分钟，请耐心等待");
+        dialog.setTitle(getString(R.string.title_activity_jxpg_list));
+        dialog.setMessage("是否进行一键评教,可能会耗时几分钟，请耐心等待");
         progressDialog.setMessage(getString(R.string.getData));
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setCancelable(false);
@@ -157,8 +157,8 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetData {
             @Override
             public void onClick(View v) {
                 if (list_pg.size() == 0) {
-                    dialog.setTitle("一键评估");
-                    dialog.setMessage("当前没有需要评估的科目");
+                    dialog.setTitle(getString(R.string.title_activity_jxpg_list));
+                    dialog.setMessage("当前没有需要评教的科目");
                     dialog.setNegativeButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -168,11 +168,11 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetData {
                     dialog.create();
                     dialog.show();
                 } else {
-                    dialog.setNegativeButton("开始评估", new DialogInterface.OnClickListener() {
+                    dialog.setNegativeButton("开始评教", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
-                            progressDialog.setTitle("正在评估");
+                            progressDialog.setTitle("正在评教");
                             progressDialog.show();
                             startPg(i);
                         }
@@ -198,7 +198,7 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetData {
         final int size = list_pg.size();
         if (size == 0) {
             progressDialog.dismiss();
-            dialog.setMessage("所有科目都评估完成!");
+            dialog.setMessage("所有科目都评教完成!");
             dialog.setNegativeButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -215,7 +215,7 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetData {
             adapter.notifyDataSetChanged();
             getInfo();
             progressDialog.dismiss();
-            dialog.setMessage("所有科目都评估完成!");
+            dialog.setMessage("所有科目都评教完成!");
             dialog.setNegativeButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -225,7 +225,7 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetData {
             dialog.setCancelable(false);
             dialog.show();
         } else {
-            progressDialog.setMessage("正在评估" + i + "/" + size + "\n" + list_pg.get(position).getKcm());
+            progressDialog.setMessage("正在评教" + i + "/" + size + "\n" + list_pg.get(position).getKcm());
             new Thread() {
                 public void run() {
                     List<NameValuePair> params = new ArrayList<>();
@@ -239,15 +239,15 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetData {
                     params2.add(new BasicNameValuePair("wjbm", list_pg.get(position).getWjbm()));
                     params2.add(new BasicNameValuePair("bpr", list_pg.get(position).getBpr()));
                     params2.add(new BasicNameValuePair("pgnr", list_pg.get(position).getPgnr()));
-                    
-                    if(zq){
-                        params2.add(new BasicNameValuePair("0000000045","10_1"));
-                    }else{
+
+                    if (zq) {
+                        params2.add(new BasicNameValuePair("0000000045", "10_1"));
+                    } else {
                         for (int i = 24; i <= 33; i++) {
                             params2.add(new BasicNameValuePair("00" + i, "100_1"));
                         }
                     }
-                    
+
                     params2.add(new BasicNameValuePair("zgpj", getString(R.string.pgnr)));
                     Log.d("params", params2.toString());
                     login(params2);

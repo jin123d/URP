@@ -3,35 +3,38 @@
 
     <group>
 
-        <item
-            android:id="@+id/navItem1"
-            android:icon="@mipmap/ic_settings_grey600_48dp"
-            android:title="@string/action_settings"/>
 
         <item
             android:id="@+id/navItem2"
             android:icon="@mipmap/ic_color_lens_grey600_48dp"
-            android:title="@string/title_activity_change_color"/>
+            android:title="@string/title_activity_change_color"
+            android:visible="false" />
 
         <item
-            android:id="@+id/navItem4"
-            android:icon="@mipmap/tcdl_2"
-            android:title="@string/tcdl"/>
+            android:id="@+id/navItem1"
+            android:icon="@mipmap/ic_settings_grey600_48dp"
+            android:title="@string/action_settings"
+            android:visible="false" />
 
     </group>
 
 
-    <item android:title="@string/other">
+    <item android:title="URP">
         <menu>
+            <item
+                android:id="@+id/navItem4"
+                android:icon="@mipmap/tcdl_2"
+                android:title="@string/tcdl" />
+
             <item
                 android:id="@+id/navItem3"
                 android:icon="@mipmap/ic_help_grey600_48dp"
-                android:title="@string/action_about"/>
+                android:title="@string/action_about" />
 
             <item
                 android:id="@+id/item_update"
                 android:icon="@mipmap/ic_file_download_grey600_48dp"
-                android:title="@string/action_update"/>
+                android:title="@string/action_update" />
 
         </menu>
     </item>
