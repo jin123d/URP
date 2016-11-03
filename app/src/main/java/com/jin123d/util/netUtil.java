@@ -2,10 +2,8 @@ package com.jin123d.util;
 
 import android.util.Log;
 
-import com.jin123d.Interface.GetNetData;
-import com.jin123d.Interface.GetZpInterface;
-
-import java.util.List;
+import com.jin123d.Interface.GetNetDataListener;
+import com.jin123d.Interface.GetPicListener;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -19,9 +17,11 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
+import java.util.List;
 
-public class netUtil {
-    public static void doPost(String url, String cookie, List<NameValuePair> nameValuePair, final GetNetData getNetData) {
+
+public class NetUtil {
+    public static void doPost(String url, String cookie, List<NameValuePair> nameValuePair, final GetNetDataListener getNetDataListener) {
         HttpPost http = new HttpPost(url);
         Log.d("URL", url);
         if (cookie != null) {
@@ -38,19 +38,19 @@ public class netUtil {
             switch (res.getStatusLine().getStatusCode()) {
                 case 200:
                     HttpEntity entity = res.getEntity();
-                    getNetData.getDataSuccess(EntityUtils.toString(entity, HTTP.UTF_8));
+                    getNetDataListener.getDataSuccess(EntityUtils.toString(entity, HTTP.UTF_8));
                     break;
                 case 302:
-                    getNetData.getDataSession();
+                    getNetDataListener.getDataSession();
                     break;
             }
         } catch (Exception e) {
-            getNetData.getDataFail();
+            getNetDataListener.getDataFail();
         }
     }
 
 
-    public static void getPostData(String url, String cookie, final GetNetData getData) {
+    public static void getPostData(String url, String cookie, final GetNetDataListener getData) {
         HttpPost http = new HttpPost(url);
         if (cookie != null) {
             http.addHeader("Cookie", "JSESSIONID=" + cookie);
@@ -77,7 +77,7 @@ public class netUtil {
     }
 
 
-    public static void getZp(String url, String cookie, final GetZpInterface getZpInterface) {
+    public static void getZp(String url, String cookie, final GetPicListener getPicListener) {
         HttpPost http = new HttpPost(url);
         if (cookie != null) {
             http.addHeader("Cookie", "JSESSIONID=" + cookie);
@@ -94,14 +94,14 @@ public class netUtil {
                 case 200:
                     HttpEntity entity = res.getEntity();
                     byte[] bytes = EntityUtils.toByteArray(entity);
-                    getZpInterface.getZpSuccess(bytes);
+                    getPicListener.getZpSuccess(bytes);
                     break;
                 case 302:
-                    getZpInterface.getZpSession();
+                    getPicListener.getZpSession();
                     break;
             }
         } catch (Exception e) {
-            getZpInterface.getZpFail();
+            getPicListener.getZpFail();
         }
     }
 }

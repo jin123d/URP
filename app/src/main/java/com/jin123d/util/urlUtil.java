@@ -3,7 +3,7 @@ package com.jin123d.util;
 /**
  * Created by jin123d on 2015/9/14.
  */
-public class urlUtil {
+public class UrlUtil {
     public static String JWCURL = "http://219.226.101.61/jiawu3.html";
     //主url
     public static String URL = "http://202.207.247.44:8064/";

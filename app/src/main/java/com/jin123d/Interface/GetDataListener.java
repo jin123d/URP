@@ -3,7 +3,7 @@ package com.jin123d.Interface;
 /**
  * Created by jin123d on 2015/11/18.
  */
-public interface GetData {
+public interface GetDataListener {
     //获取成绩
     void getCj(String Data);
     //学籍信息

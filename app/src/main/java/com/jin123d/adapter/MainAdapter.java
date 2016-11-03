@@ -16,12 +16,12 @@ import java.util.List;
 /**
  * Created by jin123d on 2015/9/20.
  */
-public class MianAdapter extends BaseAdapter {
+public class MainAdapter extends BaseAdapter {
     private List<MainModels> lists;
     private Context context;
 
 
-    public MianAdapter(List<MainModels> lists, Context context) {
+    public MainAdapter(List<MainModels> lists, Context context) {
         this.lists = lists;
         this.context = context;
     }

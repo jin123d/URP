@@ -25,14 +25,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baidu.mobstat.StatService;
-import com.jin123d.Interface.GetNetData;
-import com.jin123d.adapter.MianAdapter;
+import com.jin123d.Interface.GetNetDataListener;
+import com.jin123d.adapter.MainAdapter;
 import com.jin123d.models.MainModels;
+import com.jin123d.util.NetUtil;
 import com.jin123d.util.Sp;
-import com.jin123d.util.netUtil;
-import com.jin123d.util.urlUtil;
-import com.umeng.update.UmengUpdateAgent;
+import com.jin123d.util.UrlUtil;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -41,12 +39,12 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements GetNetData {
+public class MainActivity extends AppCompatActivity implements GetNetDataListener {
     private String cookie;
     private Toolbar toolbar;
     private List<MainModels> lists;
     private ListView listView;
-    private MianAdapter adapter;
+    private MainAdapter adapter;
     private MainModels[] mainModele;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -60,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements GetNetData {
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case urlUtil.DATA_SUCCESS:
+                case UrlUtil.DATA_SUCCESS:
                     if (tv == null) {
                         System.out.println("空");
                     } else {
@@ -82,13 +80,13 @@ public class MainActivity extends AppCompatActivity implements GetNetData {
                         }
                     }
                     break;
-                case urlUtil.DATA_FAIL:
+                case UrlUtil.DATA_FAIL:
                     progressDialog.dismiss();
                     Toast.makeText(MainActivity.this, getString(R.string.getDataTimeOut), Toast.LENGTH_SHORT).show();
                     reLogin();
 
                     break;
-                case urlUtil.SESSION:
+                case UrlUtil.SESSION:
                     Toast.makeText(MainActivity.this, getString(R.string.loginFail), Toast.LENGTH_SHORT).show();
                     reLogin();
                     break;
@@ -134,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements GetNetData {
         tv_head = (TextView) findViewById(R.id.tv_head);
 
         lists = new ArrayList<>();
-        adapter = new MianAdapter(lists, MainActivity.this);
+        adapter = new MainAdapter(lists, MainActivity.this);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -204,9 +202,6 @@ public class MainActivity extends AppCompatActivity implements GetNetData {
                                 start(LoginActivity.class);
                             }
                         }).create().show();
-                        break;
-                    case R.id.item_update:
-                        UmengUpdateAgent.forceUpdate(MainActivity.this);
                         break;
                 }
                 return false;
@@ -292,19 +287,6 @@ public class MainActivity extends AppCompatActivity implements GetNetData {
 
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        StatService.onResume(MainActivity.this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        StatService.onPause(MainActivity.this);
-    }
-
-
-    @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
@@ -313,7 +295,7 @@ public class MainActivity extends AppCompatActivity implements GetNetData {
     public void getInfo() {
         new Thread() {
             public void run() {
-                netUtil.getPostData(urlUtil.URL + urlUtil.URL_XJXX, cookie, MainActivity.this);
+                NetUtil.getPostData(UrlUtil.URL + UrlUtil.URL_XJXX, cookie, MainActivity.this);
             }
 
         }.start();
@@ -328,16 +310,16 @@ public class MainActivity extends AppCompatActivity implements GetNetData {
     @Override
     public void getDataSuccess(String Data) {
         tv = Data;
-        handler.sendEmptyMessage(urlUtil.DATA_SUCCESS);
+        handler.sendEmptyMessage(UrlUtil.DATA_SUCCESS);
     }
 
     @Override
     public void getDataFail() {
-        handler.sendEmptyMessage(urlUtil.DATA_FAIL);
+        handler.sendEmptyMessage(UrlUtil.DATA_FAIL);
     }
 
     @Override
     public void getDataSession() {
-        handler.sendEmptyMessage(urlUtil.SESSION);
+        handler.sendEmptyMessage(UrlUtil.SESSION);
     }
 }

@@ -16,13 +16,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jin123d.Interface.GetNetData;
+import com.jin123d.Interface.GetNetDataListener;
 import com.jin123d.adapter.CjAdapter;
 import com.jin123d.models.CjModels;
 import com.jin123d.urp.R;
 import com.jin123d.util.Sp;
-import com.jin123d.util.netUtil;
-import com.jin123d.util.urlUtil;
+import com.jin123d.util.NetUtil;
+import com.jin123d.util.UrlUtil;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * Created by jin123d on 2015/9/14.
  */
-public class CjBjgFragment extends Fragment implements GetNetData {
+public class CjBjgFragment extends Fragment implements GetNetDataListener {
     private String cookie;
     private String tv;
     private ProgressDialog progressDialog;
@@ -50,12 +50,12 @@ public class CjBjgFragment extends Fragment implements GetNetData {
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case urlUtil.DATA_FAIL:
+                case UrlUtil.DATA_FAIL:
                     progressDialog.dismiss();
                     Toast.makeText(getActivity(), getText(R.string.getDataTimeOut), Toast.LENGTH_SHORT).show();
                     getActivity().finish();
                     break;
-                case urlUtil.DATA_SUCCESS:
+                case UrlUtil.DATA_SUCCESS:
                     if (tv == null) {
                         System.out.println("空");
                     } else {
@@ -114,7 +114,7 @@ public class CjBjgFragment extends Fragment implements GetNetData {
 
                     }
                     break;
-                case urlUtil.SESSION:
+                case UrlUtil.SESSION:
                     Toast.makeText(getActivity(), getString(R.string.loginFail), Toast.LENGTH_SHORT).show();
                     break;
             }
@@ -132,7 +132,7 @@ public class CjBjgFragment extends Fragment implements GetNetData {
     void getInfo() {
         new Thread() {
             public void run() {
-                netUtil.getPostData(urlUtil.URL + urlUtil.URL_BJG, cookie, CjBjgFragment.this);
+                NetUtil.getPostData(UrlUtil.URL + UrlUtil.URL_BJG, cookie, CjBjgFragment.this);
             }
         }.start();
     }
@@ -200,16 +200,16 @@ public class CjBjgFragment extends Fragment implements GetNetData {
     @Override
     public void getDataSuccess(String Data) {
         tv = Data;
-        handler.sendEmptyMessage(urlUtil.DATA_SUCCESS);
+        handler.sendEmptyMessage(UrlUtil.DATA_SUCCESS);
     }
 
     @Override
     public void getDataFail() {
-        handler.sendEmptyMessage(urlUtil.DATA_FAIL);
+        handler.sendEmptyMessage(UrlUtil.DATA_FAIL);
     }
 
     @Override
     public void getDataSession() {
-        handler.sendEmptyMessage(urlUtil.SESSION);
+        handler.sendEmptyMessage(UrlUtil.SESSION);
     }
 }

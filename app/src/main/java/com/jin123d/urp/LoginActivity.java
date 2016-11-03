@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,12 +21,12 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.jin123d.Interface.GetNetData;
-import com.jin123d.Interface.GetZpInterface;
+import com.jin123d.Interface.GetNetDataListener;
+import com.jin123d.Interface.IsLoginListener;
+import com.jin123d.util.JsoupUtil;
+import com.jin123d.util.NetUtil;
 import com.jin123d.util.Sp;
-import com.jin123d.util.netUtil;
-import com.jin123d.util.urlUtil;
-import com.umeng.update.UmengUpdateAgent;
+import com.jin123d.util.UrlUtil;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -41,15 +40,13 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, GetNetData {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, GetNetDataListener {
     private EditText et_user, et_pwd, et_yzm;
     private ImageView img_yzm;
     private ProgressBar pgb_yzm;
@@ -61,7 +58,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private String mm;
     private String tv;
     private ProgressDialog progressDialog;
-    private ProgressBar progressBar;
     private Sp sp;
     private CheckBox chb_mm;
     private CheckBox chk_auto;
@@ -71,27 +67,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Handler handler = new Handler() {
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
-                case urlUtil.DATA_FAIL:
+                case UrlUtil.DATA_FAIL:
                     progressDialog.dismiss();
                     // shapeLoadingDialog.dismiss();
                     Snackbar.make(lin_main, getText(R.string.getDataTimeOut), Snackbar.LENGTH_SHORT)
                             .show();
                     break;
-                case urlUtil.YZM_SUCCESS:
+                case UrlUtil.YZM_SUCCESS:
                     img_yzm.setImageBitmap(bitmap);
-                    progressBar.setVisibility(View.INVISIBLE);
+                    pgb_yzm.setVisibility(View.INVISIBLE);
                     /*Toast.makeText(LoginActivity.this, cookie, Toast.LENGTH_SHORT)
                             .show();*/
                     break;
-                case urlUtil.DATA_SUCCESS:
-                    if (tv == null) {
-                        Log.d("login","获取到的内容为空");
-                    } else {
-                        Document doc = Jsoup.parse(tv);
-                        String title = doc.title();
-                        progressDialog.dismiss();
-                        //shapeLoadingDialog.dismiss();
-                        if (getString(R.string.title_success).equals(title)) {
+                case UrlUtil.DATA_SUCCESS:
+                    progressDialog.dismiss();
+                    JsoupUtil.isLogin(LoginActivity.this, tv, new IsLoginListener() {
+                        @Override
+                        public void loginSuccess() {
                             if (chb_mm.isChecked()) {
                                 sp.setZjh(zjh);
                                 sp.setMm(mm);
@@ -104,22 +96,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 sp.setAuto(true);
                             }
                             sp.setCookie(cookie);
-                            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();
-                        } else if (getText(R.string.webTitle).equals(title)) {
-                            String error = doc.select("[class=errorTop]").text();
-                            Snackbar.make(lin_main, error, Snackbar.LENGTH_SHORT)
+                        }
+
+                        @Override
+                        public void loginFailed(String errorMsg) {
+                            Snackbar.make(lin_main, errorMsg, Snackbar.LENGTH_SHORT)
                                     .show();
                             getCode();
                         }
-                    }
+                    });
                     break;
-                case urlUtil.YZM_FAIL:
+                case UrlUtil.YZM_FAIL:
                     Snackbar.make(lin_main, getText(R.string.getYzmFail), Snackbar.LENGTH_SHORT)
                             .show();
-                    progressBar.setVisibility(View.INVISIBLE);
+                    pgb_yzm.setVisibility(View.INVISIBLE);
                     break;
-                case urlUtil.SESSION:
+                case UrlUtil.SESSION:
                     Toast.makeText(LoginActivity.this, getString(R.string.loginFail), Toast.LENGTH_SHORT).show();
                     break;
                 default:
@@ -134,9 +128,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        //友盟自动更新
-        UmengUpdateAgent.setUpdateOnlyWifi(false);
-        UmengUpdateAgent.update(this);
         setTitle(getString(R.string.login));
         sp = new Sp(LoginActivity.this);
         if (sp.getAuto()) {
@@ -168,7 +159,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //---滑动视图结束
         setSupportActionBar(toolbar);
         pgb_yzm.setVisibility(View.GONE);
-        progressBar = (ProgressBar) findViewById(R.id.pgb_yzm);
         progressDialog = new ProgressDialog(LoginActivity.this);
         progressDialog.setMessage(getText(R.string.logining));
         progressDialog.setCancelable(false);
@@ -215,16 +205,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void getCode() {
-        progressBar.setVisibility(View.VISIBLE);
+        pgb_yzm.setVisibility(View.VISIBLE);
         et_yzm.setFocusable(true);
         et_yzm.setText(null);
         new Thread() {
             public void run() {
                 bitmap = getcode();
                 if (bitmap == null) {
-                    handler.sendEmptyMessage(urlUtil.YZM_FAIL);
+                    handler.sendEmptyMessage(UrlUtil.YZM_FAIL);
                 } else {
-                    handler.sendEmptyMessage(urlUtil.YZM_SUCCESS);
+                    handler.sendEmptyMessage(UrlUtil.YZM_SUCCESS);
                 }
             }
         }.start();
@@ -240,8 +230,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 params.add(new BasicNameValuePair("mm", mm));
                 params.add(new BasicNameValuePair("v_yzm", et_yzm.getText()
                         .toString()));
-                netUtil.doPost(
-                        urlUtil.URL + urlUtil.URL_LOGIN, cookie, params, LoginActivity.this);
+                NetUtil.doPost(
+                        UrlUtil.URL + UrlUtil.URL_LOGIN, cookie, params, LoginActivity.this);
             }
         }.start();
     }
@@ -250,7 +240,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     //获取验证码
     public Bitmap getcode() {
         HttpPost httpPost = new HttpPost(
-                urlUtil.URL + urlUtil.URL_YZM);
+                UrlUtil.URL + UrlUtil.URL_YZM);
         HttpResponse httpResponse = null;
         try {
             HttpParams params = new BasicHttpParams();
@@ -266,7 +256,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-            handler.sendEmptyMessage(urlUtil.YZM_FAIL);
+            handler.sendEmptyMessage(UrlUtil.YZM_FAIL);
         }
         return bitmap;
     }
@@ -281,7 +271,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                String str = urlUtil.URL;
+                String str = UrlUtil.URL;
                 Snackbar.make(lin_main, str, Snackbar.LENGTH_SHORT)
                         .show();
                 break;
@@ -297,16 +287,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void getDataSuccess(String Data) {
         tv = Data;
-        handler.sendEmptyMessage(urlUtil.DATA_SUCCESS);
+        handler.sendEmptyMessage(UrlUtil.DATA_SUCCESS);
     }
 
     @Override
     public void getDataFail() {
-        handler.sendEmptyMessage(urlUtil.DATA_FAIL);
+        handler.sendEmptyMessage(UrlUtil.DATA_FAIL);
     }
 
     @Override
     public void getDataSession() {
-        handler.sendEmptyMessage(urlUtil.SESSION);
+        handler.sendEmptyMessage(UrlUtil.SESSION);
     }
 }

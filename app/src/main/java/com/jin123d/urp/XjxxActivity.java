@@ -1,7 +1,6 @@
 package com.jin123d.urp;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -14,18 +13,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baidu.mobstat.StatService;
-import com.jin123d.Interface.GetNetData;
-import com.jin123d.Interface.GetZpInterface;
+import com.jin123d.Interface.GetNetDataListener;
+import com.jin123d.Interface.GetPicListener;
+import com.jin123d.util.NetUtil;
 import com.jin123d.util.Sp;
-import com.jin123d.util.netUtil;
-import com.jin123d.util.urlUtil;
+import com.jin123d.util.UrlUtil;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-public class XjxxActivity extends AppCompatActivity implements GetNetData, GetZpInterface {
+public class XjxxActivity extends AppCompatActivity implements GetNetDataListener, GetPicListener {
     private TextView tv_html;
     private String cookie;
     private String tv;
@@ -38,7 +36,7 @@ public class XjxxActivity extends AppCompatActivity implements GetNetData, GetZp
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case urlUtil.DATA_SUCCESS:
+                case UrlUtil.DATA_SUCCESS:
                     if (tv == null) {
                         System.out.println("空");
                     } else {
@@ -65,16 +63,16 @@ public class XjxxActivity extends AppCompatActivity implements GetNetData, GetZp
                         }
                     }
                     break;
-                case urlUtil.DATA_FAIL:
+                case UrlUtil.DATA_FAIL:
                     progressDialog.dismiss();
                     Toast.makeText(XjxxActivity.this, getString(R.string.getDataTimeOut), Toast.LENGTH_SHORT).show();
                     finish();
                     break;
-                case urlUtil.YZM_SUCCESS:
+                case UrlUtil.YZM_SUCCESS:
                     bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                     img_zp.setImageBitmap(bitmap);
                     break;
-                case urlUtil.SESSION:
+                case UrlUtil.SESSION:
                     Toast.makeText(XjxxActivity.this, getString(R.string.loginFail), Toast.LENGTH_SHORT).show();
                     break;
             }
@@ -110,55 +108,43 @@ public class XjxxActivity extends AppCompatActivity implements GetNetData, GetZp
     public void getInfo() {
         new Thread() {
             public void run() {
-                netUtil.getPostData(urlUtil.URL + urlUtil.URL_XJXX, cookie, XjxxActivity.this);
-                netUtil.getZp(urlUtil.URL + urlUtil.URL_ZP, cookie, XjxxActivity.this);
+                NetUtil.getPostData(UrlUtil.URL + UrlUtil.URL_XJXX, cookie, XjxxActivity.this);
+                NetUtil.getZp(UrlUtil.URL + UrlUtil.URL_ZP, cookie, XjxxActivity.this);
             }
         }.start();
     }
 
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        StatService.onResume(XjxxActivity.this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        StatService.onPause(XjxxActivity.this);
-    }
-
-    @Override
     public void getDataSuccess(String Data) {
         tv = Data;
-        handler.sendEmptyMessage(urlUtil.DATA_SUCCESS);
+        handler.sendEmptyMessage(UrlUtil.DATA_SUCCESS);
     }
 
     @Override
     public void getDataFail() {
-        handler.sendEmptyMessage(urlUtil.DATA_FAIL);
+        handler.sendEmptyMessage(UrlUtil.DATA_FAIL);
 
     }
 
     @Override
     public void getDataSession() {
-        handler.sendEmptyMessage(urlUtil.SESSION);
+        handler.sendEmptyMessage(UrlUtil.SESSION);
     }
 
     @Override
     public void getZpSuccess(byte[] bytes) {
         this.bytes = bytes;
-        handler.sendEmptyMessage(urlUtil.YZM_SUCCESS);
+        handler.sendEmptyMessage(UrlUtil.YZM_SUCCESS);
     }
 
     @Override
     public void getZpFail() {
-        handler.sendEmptyMessage(urlUtil.YZM_FAIL);
+        handler.sendEmptyMessage(UrlUtil.YZM_FAIL);
     }
 
     @Override
     public void getZpSession() {
-        handler.sendEmptyMessage(urlUtil.SESSION);
+        handler.sendEmptyMessage(UrlUtil.SESSION);
     }
 }

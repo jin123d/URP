@@ -15,14 +15,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.baidu.mobstat.StatService;
-import com.jin123d.Interface.GetNetData;
+import com.jin123d.Interface.GetNetDataListener;
 import com.jin123d.adapter.JxpgAdapter;
 import com.jin123d.models.JxpgModels;
 import com.jin123d.models.PgInfoModels;
+import com.jin123d.util.NetUtil;
 import com.jin123d.util.Sp;
-import com.jin123d.util.netUtil;
-import com.jin123d.util.urlUtil;
+import com.jin123d.util.UrlUtil;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -34,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class JxpgListActivity extends AppCompatActivity implements GetNetData {
+public class JxpgListActivity extends AppCompatActivity implements GetNetDataListener {
     private String cookie;
     private ProgressDialog progressDialog;
     private Toolbar toolbar;
@@ -49,12 +48,12 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetData {
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case urlUtil.DATA_FAIL:
+                case UrlUtil.DATA_FAIL:
                     progressDialog.dismiss();
                     Toast.makeText(JxpgListActivity.this, getString(R.string.getDataTimeOut), Toast.LENGTH_SHORT).show();
                     finish();
                     break;
-                case urlUtil.DATA_SUCCESS:
+                case UrlUtil.DATA_SUCCESS:
                     if (tv == null) {
                         System.out.println("空");
                     } else {
@@ -95,10 +94,10 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetData {
                         }
                     }
                     break;
-                case urlUtil.SESSION:
+                case UrlUtil.SESSION:
                     Toast.makeText(JxpgListActivity.this, getString(R.string.loginFail), Toast.LENGTH_SHORT).show();
                     break;
-                case urlUtil.PG_SUCCESS:
+                case UrlUtil.PG_SUCCESS:
                     Document doc = Jsoup.parse(tv);
                     progressDialog.setMessage(doc.text());
                     i++;
@@ -188,7 +187,7 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetData {
     public void getInfo() {
         new Thread() {
             public void run() {
-                netUtil.getPostData(urlUtil.URL + urlUtil.URL_JXPG_LIST, cookie, JxpgListActivity.this);
+                NetUtil.getPostData(UrlUtil.URL + UrlUtil.URL_JXPG_LIST, cookie, JxpgListActivity.this);
             }
         }.start();
     }
@@ -257,8 +256,8 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetData {
     }
 
     public void loginPg(List<NameValuePair> params) {
-        netUtil.doPost(
-                urlUtil.URL + urlUtil.URL_PG, cookie, params, new GetNetData() {
+        NetUtil.doPost(
+                UrlUtil.URL + UrlUtil.URL_PG, cookie, params, new GetNetDataListener() {
                     @Override
                     public void getDataSuccess(String Data) {
 
@@ -277,22 +276,22 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetData {
     }
 
     public void login(List<NameValuePair> params) {
-        netUtil.doPost(
-                urlUtil.URL + urlUtil.URL_JXPG, cookie, params, new GetNetData() {
+        NetUtil.doPost(
+                UrlUtil.URL + UrlUtil.URL_JXPG, cookie, params, new GetNetDataListener() {
                     @Override
                     public void getDataSuccess(String Data) {
                         tv = Data;
-                        handler.sendEmptyMessage(urlUtil.PG_SUCCESS);
+                        handler.sendEmptyMessage(UrlUtil.PG_SUCCESS);
                     }
 
                     @Override
                     public void getDataFail() {
-                        handler.sendEmptyMessage(urlUtil.DATA_FAIL);
+                        handler.sendEmptyMessage(UrlUtil.DATA_FAIL);
                     }
 
                     @Override
                     public void getDataSession() {
-                        handler.sendEmptyMessage(urlUtil.SESSION);
+                        handler.sendEmptyMessage(UrlUtil.SESSION);
                     }
                 });
 
@@ -300,31 +299,19 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetData {
 
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        StatService.onResume(JxpgListActivity.this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        StatService.onPause(JxpgListActivity.this);
-    }
-
-    @Override
     public void getDataSuccess(String Data) {
         tv = Data;
-        handler.sendEmptyMessage(urlUtil.DATA_SUCCESS);
+        handler.sendEmptyMessage(UrlUtil.DATA_SUCCESS);
     }
 
     @Override
     public void getDataFail() {
-        handler.sendEmptyMessage(urlUtil.DATA_FAIL);
+        handler.sendEmptyMessage(UrlUtil.DATA_FAIL);
     }
 
     @Override
     public void getDataSession() {
-        handler.sendEmptyMessage(urlUtil.SESSION);
+        handler.sendEmptyMessage(UrlUtil.SESSION);
     }
 
 

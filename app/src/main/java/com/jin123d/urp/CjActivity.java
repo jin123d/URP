@@ -10,12 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.baidu.mobstat.StatService;
 import com.jin123d.fragment.CjBjgFragment;
 import com.jin123d.fragment.CjJgFragment;
 
 
-public class CjActivity extends AppCompatActivity{
+public class CjActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
@@ -31,19 +30,19 @@ public class CjActivity extends AppCompatActivity{
 
     }
 
-   void  initView(){
-       toolbar = (Toolbar) findViewById(R.id.toolbar);
-       setSupportActionBar(toolbar);
-       toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               finish();
-           }
-       });
-       tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-       viewPager = (ViewPager) findViewById(R.id.pager);
-       viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
-       tabLayout.setupWithViewPager(viewPager);
+    void initView() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+        tabLayout.setupWithViewPager(viewPager);
     }
 
 
@@ -85,16 +84,4 @@ public class CjActivity extends AppCompatActivity{
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        StatService.onResume(CjActivity.this);
-    }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        StatService.onPause(CjActivity.this);
-    }
 }

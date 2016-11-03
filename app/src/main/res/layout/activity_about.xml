@@ -19,40 +19,23 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="TYUT_URP助手"
-            android:textColor="@android:color/white"
-            android:textSize="36sp" />
-
-        <TextView
-            android:id="@+id/tv_verName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="12dp"
-            android:gravity="center"
-            android:textColor="@android:color/white"
-            android:textSize="24sp" />
     </android.support.design.widget.AppBarLayout>
 
 
     <TextView
+        android:id="@+id/tv_verName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="24dp"
         android:gravity="center"
-        android:text="高婷霞毕业设计"
+        android:text="jin123d"
         android:textColor="@android:color/black"
         android:visibility="visible" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:text="@string/thanks"

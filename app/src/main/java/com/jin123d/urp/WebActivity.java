@@ -9,8 +9,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
-import com.baidu.mobstat.StatService;
-
 public class WebActivity extends AppCompatActivity {
     private WebView web;
 
@@ -19,7 +17,7 @@ public class WebActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
         web = (WebView) findViewById(R.id.web);
-        final ProgressBar bar = (ProgressBar)findViewById(R.id.myProgressBar);
+        final ProgressBar bar = (ProgressBar) findViewById(R.id.myProgressBar);
         WebSettings webSettings = web.getSettings();
         webSettings.setJavaScriptEnabled(true);
         web.loadUrl("http://www.jin123d.com/?p=176");
@@ -51,15 +49,4 @@ public class WebActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        StatService.onResume(WebActivity.this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        StatService.onPause(WebActivity.this);
-    }
 }

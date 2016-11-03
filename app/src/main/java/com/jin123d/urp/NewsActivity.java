@@ -2,9 +2,9 @@ package com.jin123d.urp;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,8 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.baidu.mobstat.StatService;
-import com.jin123d.util.urlUtil;
+import com.jin123d.util.UrlUtil;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -33,7 +32,7 @@ public class NewsActivity extends AppCompatActivity {
             progressDialog.dismiss();
             if (msg.what == 1) {
                 textView.setText(tv);
-            }else{
+            } else {
                 Snackbar.make(textView, "获取数据失败", Snackbar.LENGTH_SHORT).show();
 
             }
@@ -73,7 +72,7 @@ public class NewsActivity extends AppCompatActivity {
         new Thread() {
             public void run() {
                 try {
-                    Document document = Jsoup.connect(urlUtil.URL_JWC + URL).timeout(5000).get();
+                    Document document = Jsoup.connect(UrlUtil.URL_JWC + URL).timeout(5000).get();
                     Elements es = document.select("td[align=left]");
                     tv = es.text();
 
@@ -86,16 +85,5 @@ public class NewsActivity extends AppCompatActivity {
         }.start();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        StatService.onResume(NewsActivity.this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        StatService.onPause(NewsActivity.this);
-    }
 
 }

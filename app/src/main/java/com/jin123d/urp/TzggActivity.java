@@ -16,7 +16,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.jin123d.models.TzggModels;
-import com.jin123d.util.urlUtil;
+import com.jin123d.util.UrlUtil;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -41,7 +41,6 @@ public class TzggActivity extends AppCompatActivity {
             switch (msg.what) {
                 case 1:
                     arrayAdapter.notifyDataSetChanged();
-
                     break;
                 case 2:
                     Snackbar.make(listView, "获取数据失败", Snackbar.LENGTH_SHORT).show();
@@ -100,15 +99,16 @@ public class TzggActivity extends AppCompatActivity {
         new Thread() {
             public void run() {
                 try {
-                    Document document = Jsoup.connect(urlUtil.URL_JWC + urlUtil.URL_TZGG).timeout(5000).get();
-                    Elements es = document.select("[style=height: 310px]").select("table[align=center]").select("tbody").select("tr");
+                    String url = UrlUtil.URL_JWC + UrlUtil.URL_TZGG;
+                    Document document = Jsoup.connect(url).timeout(5000).get();
+                    Elements es = document.select("[style=height: 310px]").select("table[align=center]");
                     // Log.d("内容",es.toString());
                     for (int i = 0; i < es.size(); i++) {
-                        Elements elements = es.get(i).getElementsByTag("span");
-                        Log.d("内容", elements.toString());
-                        String linkHref = elements.select("a").attr("href");
+                        Element element = es.get(i).select("tbody").select("tr").select("td").get(1).select("span").get(0);
+                        Log.d("内容", element.toString());
+                        String linkHref = element.select("a").attr("href");
                         Log.d("网址", linkHref);
-                        String title = elements.text();
+                        String title = element.text();
                         lists.add(title);
                         TzggModels tzggModels = new TzggModels(title, linkHref);
                         list_tz.add(tzggModels);

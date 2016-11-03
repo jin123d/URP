@@ -3,33 +3,12 @@
     package="com.jin123d.urp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/icon"
         android:label="@string/appname"
         android:theme="@style/AppTheme">
-        <meta-data
-            android:name="BDAPPKEY"
-            android:value="0a1970df79" />
-
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="568a4d2c67e58e6a9b000e8d" />
-        <meta-data
-            android:name="UMENG_CHANNEL"
-            android:value="Channel ID" />
-
         <activity
             android:name=".LoginActivity"
             android:label="@string/appname">
@@ -73,23 +52,12 @@
         <activity
             android:name=".WebActivity"
             android:label="@string/title_activity_about" />
-
-
         <activity
             android:name=".ChangeColor"
             android:label="@string/title_activity_change_color" />
         <activity
             android:name=".AboutActivity"
             android:label="@string/title_activity_about" />
-
-
-        <service
-            android:name="com.umeng.update.net.DownloadingService"
-            android:process=":DownloadingService" />
-        <activity
-            android:name="com.umeng.update.UpdateDialogActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
 
     </application>
 

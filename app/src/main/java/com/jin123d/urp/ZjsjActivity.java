@@ -1,21 +1,7 @@
 package com.jin123d.urp;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
-
-import com.baidu.mobstat.StatService;
-import com.jin123d.Interface.GetData;
-import com.jin123d.Interface.GetNetData;
-import com.jin123d.adapter.ZjsjAdapter;
-import com.jin123d.models.ZjsjModels;
-import com.jin123d.util.Sp;
-import com.jin123d.util.netUtil;
-import com.jin123d.util.urlUtil;
-
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -26,10 +12,21 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.jin123d.Interface.GetNetDataListener;
+import com.jin123d.adapter.ZjsjAdapter;
+import com.jin123d.models.ZjsjModels;
+import com.jin123d.util.NetUtil;
+import com.jin123d.util.Sp;
+import com.jin123d.util.UrlUtil;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class ZjsjActivity extends AppCompatActivity implements GetNetData {
+public class ZjsjActivity extends AppCompatActivity implements GetNetDataListener {
     private String cookie;
     private String tv;
     private ProgressDialog progressDialog;
@@ -42,13 +39,13 @@ public class ZjsjActivity extends AppCompatActivity implements GetNetData {
         public void handleMessage(Message msg) {
 
             switch (msg.what) {
-                case urlUtil.DATA_FAIL:
+                case UrlUtil.DATA_FAIL:
                     progressDialog.dismiss();
 
                     Toast.makeText(ZjsjActivity.this, getString(R.string.getDataTimeOut), Toast.LENGTH_SHORT).show();
                     finish();
                     break;
-                case urlUtil.DATA_SUCCESS:
+                case UrlUtil.DATA_SUCCESS:
                     if (tv == null) {
                         System.out.println("空");
                     } else {
@@ -102,7 +99,7 @@ public class ZjsjActivity extends AppCompatActivity implements GetNetData {
                         }
                     }
                     break;
-                case urlUtil.SESSION:
+                case UrlUtil.SESSION:
                     Toast.makeText(ZjsjActivity.this, getString(R.string.loginFail), Toast.LENGTH_SHORT).show();
                     break;
             }
@@ -125,7 +122,7 @@ public class ZjsjActivity extends AppCompatActivity implements GetNetData {
     private void getData() {
         new Thread() {
             public void run() {
-                netUtil.getPostData(urlUtil.URL + urlUtil.URL_ZJSJ, cookie, ZjsjActivity.this);
+                NetUtil.getPostData(UrlUtil.URL + UrlUtil.URL_ZJSJ, cookie, ZjsjActivity.this);
             }
         }.start();
     }
@@ -168,32 +165,20 @@ public class ZjsjActivity extends AppCompatActivity implements GetNetData {
         lv_zjsj.setAdapter(adapter);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        StatService.onResume(ZjsjActivity.this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        StatService.onPause(ZjsjActivity.this);
-    }
-
 
     @Override
     public void getDataSuccess(String Data) {
         tv = Data;
-        handler.sendEmptyMessage(urlUtil.DATA_SUCCESS);
+        handler.sendEmptyMessage(UrlUtil.DATA_SUCCESS);
     }
 
     @Override
     public void getDataFail() {
-        handler.sendEmptyMessage(urlUtil.DATA_FAIL);
+        handler.sendEmptyMessage(UrlUtil.DATA_FAIL);
     }
 
     @Override
     public void getDataSession() {
-        handler.sendEmptyMessage(urlUtil.SESSION);
+        handler.sendEmptyMessage(UrlUtil.SESSION);
     }
 }

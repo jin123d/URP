@@ -10,17 +10,16 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baidu.mobstat.StatService;
-import com.jin123d.Interface.GetNetData;
+import com.jin123d.Interface.GetNetDataListener;
+import com.jin123d.util.NetUtil;
 import com.jin123d.util.Sp;
-import com.jin123d.util.netUtil;
-import com.jin123d.util.urlUtil;
+import com.jin123d.util.UrlUtil;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-public class XfjdActivity extends AppCompatActivity implements GetNetData {
+public class XfjdActivity extends AppCompatActivity implements GetNetDataListener {
     private String cookie;
     private String tv;
     private ProgressDialog progressDialog;
@@ -37,13 +36,13 @@ public class XfjdActivity extends AppCompatActivity implements GetNetData {
         public void handleMessage(Message msg) {
 
             switch (msg.what) {
-                case urlUtil.DATA_FAIL:
+                case UrlUtil.DATA_FAIL:
                     progressDialog.dismiss();
 
                     Toast.makeText(XfjdActivity.this, getString(R.string.getDataTimeOut), Toast.LENGTH_SHORT).show();
                     finish();
                     break;
-                case urlUtil.DATA_SUCCESS:
+                case UrlUtil.DATA_SUCCESS:
                     if (tv == null) {
                         System.out.println("空");
                     } else {
@@ -77,7 +76,7 @@ public class XfjdActivity extends AppCompatActivity implements GetNetData {
 
                     }
                     break;
-                case urlUtil.SESSION:
+                case UrlUtil.SESSION:
                     Toast.makeText(XfjdActivity.this, getString(R.string.loginFail), Toast.LENGTH_SHORT).show();
                     break;
             }
@@ -122,36 +121,25 @@ public class XfjdActivity extends AppCompatActivity implements GetNetData {
     public void getInfo() {
         new Thread() {
             public void run() {
-                netUtil.getPostData(urlUtil.URL + urlUtil.URL_XFDJ, cookie, XfjdActivity.this);
+                NetUtil.getPostData(UrlUtil.URL + UrlUtil.URL_XFDJ, cookie, XfjdActivity.this);
             }
         }.start();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        StatService.onResume(XfjdActivity.this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        StatService.onPause(XfjdActivity.this);
-    }
 
     @Override
     public void getDataSuccess(String Data) {
         tv = Data;
-        handler.sendEmptyMessage(urlUtil.DATA_SUCCESS);
+        handler.sendEmptyMessage(UrlUtil.DATA_SUCCESS);
     }
 
     @Override
     public void getDataFail() {
-        handler.sendEmptyMessage(urlUtil.DATA_FAIL);
+        handler.sendEmptyMessage(UrlUtil.DATA_FAIL);
     }
 
     @Override
     public void getDataSession() {
-        handler.sendEmptyMessage(urlUtil.SESSION);
+        handler.sendEmptyMessage(UrlUtil.SESSION);
     }
 }
