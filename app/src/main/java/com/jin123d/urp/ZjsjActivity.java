@@ -15,9 +15,8 @@ import android.widget.Toast;
 import com.jin123d.Interface.GetNetDataListener;
 import com.jin123d.adapter.ZjsjAdapter;
 import com.jin123d.models.ZjsjModels;
-import com.jin123d.util.NetUtil;
-import com.jin123d.util.Sp;
-import com.jin123d.util.UrlUtil;
+import com.jin123d.util.HttpUtil;
+import com.jin123d.util.UrpUrl;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -27,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ZjsjActivity extends AppCompatActivity implements GetNetDataListener {
-    private String cookie;
     private String tv;
     private ProgressDialog progressDialog;
     private ListView lv_zjsj;
@@ -39,13 +37,13 @@ public class ZjsjActivity extends AppCompatActivity implements GetNetDataListene
         public void handleMessage(Message msg) {
 
             switch (msg.what) {
-                case UrlUtil.DATA_FAIL:
+                case UrpUrl.DATA_FAIL:
                     progressDialog.dismiss();
 
                     Toast.makeText(ZjsjActivity.this, getString(R.string.getDataTimeOut), Toast.LENGTH_SHORT).show();
                     finish();
                     break;
-                case UrlUtil.DATA_SUCCESS:
+                case UrpUrl.DATA_SUCCESS:
                     if (tv == null) {
                         System.out.println("空");
                     } else {
@@ -99,7 +97,7 @@ public class ZjsjActivity extends AppCompatActivity implements GetNetDataListene
                         }
                     }
                     break;
-                case UrlUtil.SESSION:
+                case UrpUrl.SESSION:
                     Toast.makeText(ZjsjActivity.this, getString(R.string.loginFail), Toast.LENGTH_SHORT).show();
                     break;
             }
@@ -111,8 +109,6 @@ public class ZjsjActivity extends AppCompatActivity implements GetNetDataListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zjsj);
-        Sp sp = new Sp(ZjsjActivity.this);
-        cookie = sp.getCookie();
         initView();
         //getInfo();
         getData();
@@ -122,7 +118,7 @@ public class ZjsjActivity extends AppCompatActivity implements GetNetDataListene
     private void getData() {
         new Thread() {
             public void run() {
-                NetUtil.getPostData(UrlUtil.URL + UrlUtil.URL_ZJSJ, cookie, ZjsjActivity.this);
+                HttpUtil.doGet(UrpUrl.URL + UrpUrl.URL_ZJSJ, ZjsjActivity.this);
             }
         }.start();
     }
@@ -169,16 +165,16 @@ public class ZjsjActivity extends AppCompatActivity implements GetNetDataListene
     @Override
     public void getDataSuccess(String Data) {
         tv = Data;
-        handler.sendEmptyMessage(UrlUtil.DATA_SUCCESS);
+        handler.sendEmptyMessage(UrpUrl.DATA_SUCCESS);
     }
 
     @Override
     public void getDataFail() {
-        handler.sendEmptyMessage(UrlUtil.DATA_FAIL);
+        handler.sendEmptyMessage(UrpUrl.DATA_FAIL);
     }
 
     @Override
     public void getDataSession() {
-        handler.sendEmptyMessage(UrlUtil.SESSION);
+        handler.sendEmptyMessage(UrpUrl.SESSION);
     }
 }

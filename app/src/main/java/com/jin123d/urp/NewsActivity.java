@@ -12,7 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.jin123d.util.UrlUtil;
+import com.jin123d.util.UrpUrl;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -72,7 +72,7 @@ public class NewsActivity extends AppCompatActivity {
         new Thread() {
             public void run() {
                 try {
-                    Document document = Jsoup.connect(UrlUtil.URL_JWC + URL).timeout(5000).get();
+                    Document document = Jsoup.connect(UrpUrl.URL_JWC + URL).timeout(5000).get();
                     Elements es = document.select("td[align=left]");
                     tv = es.text();
 

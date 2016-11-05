@@ -16,9 +16,8 @@ import com.jin123d.Interface.GetNetDataListener;
 import com.jin123d.adapter.CjAdapter;
 import com.jin123d.models.CjModels;
 import com.jin123d.urp.R;
-import com.jin123d.util.Sp;
-import com.jin123d.util.NetUtil;
-import com.jin123d.util.UrlUtil;
+import com.jin123d.util.HttpUtil;
+import com.jin123d.util.UrpUrl;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -29,9 +28,8 @@ import java.util.List;
 
 /**
  * Created by jin123d on 2015/9/14.
- */
+ **/
 public class CjJgFragment extends Fragment implements GetNetDataListener {
-    private String cookie;
     private String tv;
     private ProgressDialog progressDialog;
     private ListView lv_zjsj;
@@ -42,12 +40,12 @@ public class CjJgFragment extends Fragment implements GetNetDataListener {
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case UrlUtil.DATA_FAIL:
+                case UrpUrl.DATA_FAIL:
                     progressDialog.dismiss();
                     Toast.makeText(getActivity(), getText(R.string.getDataTimeOut), Toast.LENGTH_SHORT).show();
                     getActivity().finish();
                     break;
-                case UrlUtil.DATA_SUCCESS:
+                case UrpUrl.DATA_SUCCESS:
                     if (tv == null) {
                         System.out.println("空");
                     } else {
@@ -83,7 +81,7 @@ public class CjJgFragment extends Fragment implements GetNetDataListener {
 
                     }
                     break;
-                case UrlUtil.SESSION:
+                case UrpUrl.SESSION:
                     Toast.makeText(getActivity(), getString(R.string.loginFail), Toast.LENGTH_SHORT).show();
                     break;
             }
@@ -107,7 +105,7 @@ public class CjJgFragment extends Fragment implements GetNetDataListener {
     void getInfo() {
         new Thread() {
             public void run() {
-                NetUtil.getPostData(UrlUtil.URL + UrlUtil.URL_QB, cookie, CjJgFragment.this);
+                HttpUtil.doGet(UrpUrl.URL + UrpUrl.URL_QB, CjJgFragment.this);
             }
 
             ;
@@ -118,8 +116,6 @@ public class CjJgFragment extends Fragment implements GetNetDataListener {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Sp sp = new Sp(getActivity());
-        cookie = sp.getCookie();
         getInfo();
         lv_zjsj = (ListView) view.findViewById(R.id.lv_zjsj);
         progressDialog = new ProgressDialog(getActivity());
@@ -147,16 +143,16 @@ public class CjJgFragment extends Fragment implements GetNetDataListener {
     @Override
     public void getDataSuccess(String Data) {
         tv = Data;
-        handler.sendEmptyMessage(UrlUtil.DATA_SUCCESS);
+        handler.sendEmptyMessage(UrpUrl.DATA_SUCCESS);
     }
 
     @Override
     public void getDataFail() {
-        handler.sendEmptyMessage(UrlUtil.DATA_FAIL);
+        handler.sendEmptyMessage(UrpUrl.DATA_FAIL);
     }
 
     @Override
     public void getDataSession() {
-        handler.sendEmptyMessage(UrlUtil.SESSION);
+        handler.sendEmptyMessage(UrpUrl.SESSION);
     }
 }

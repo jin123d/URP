@@ -11,9 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jin123d.Interface.GetNetDataListener;
-import com.jin123d.util.NetUtil;
-import com.jin123d.util.Sp;
-import com.jin123d.util.UrlUtil;
+import com.jin123d.util.HttpUtil;
+import com.jin123d.util.UrpUrl;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -21,7 +20,6 @@ import org.jsoup.select.Elements;
 
 
 public class KbActivity extends AppCompatActivity implements GetNetDataListener {
-    private String cookie;
     private String tv;
     private ProgressDialog progressDialog;
     private Toolbar toolbar;
@@ -31,13 +29,13 @@ public class KbActivity extends AppCompatActivity implements GetNetDataListener 
         public void handleMessage(Message msg) {
 
             switch (msg.what) {
-                case UrlUtil.DATA_FAIL:
+                case UrpUrl.DATA_FAIL:
                     progressDialog.dismiss();
 
                     Toast.makeText(KbActivity.this, getString(R.string.getDataTimeOut), Toast.LENGTH_SHORT).show();
                     finish();
                     break;
-                case UrlUtil.DATA_SUCCESS:
+                case UrpUrl.DATA_SUCCESS:
                     if (tv == null) {
                         System.out.println("空");
                     } else {
@@ -57,7 +55,7 @@ public class KbActivity extends AppCompatActivity implements GetNetDataListener 
                         }
                     }
                     break;
-                case UrlUtil.SESSION:
+                case UrpUrl.SESSION:
                     Toast.makeText(KbActivity.this, getString(R.string.loginFail), Toast.LENGTH_SHORT).show();
                     break;
             }
@@ -69,8 +67,6 @@ public class KbActivity extends AppCompatActivity implements GetNetDataListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kb);
-        Sp sp = new Sp(KbActivity.this);
-        cookie = sp.getCookie();
         getInfo();
         initView();
     }
@@ -98,7 +94,7 @@ public class KbActivity extends AppCompatActivity implements GetNetDataListener 
     public void getInfo() {
         new Thread() {
             public void run() {
-                NetUtil.getPostData(UrlUtil.URL + UrlUtil.URL_KB, cookie, KbActivity.this);
+                HttpUtil.doGet(UrpUrl.URL + UrpUrl.URL_KB, KbActivity.this);
             }
         }.start();
     }
@@ -107,16 +103,16 @@ public class KbActivity extends AppCompatActivity implements GetNetDataListener 
     @Override
     public void getDataSuccess(String Data) {
         tv = Data;
-        handler.sendEmptyMessage(UrlUtil.DATA_SUCCESS);
+        handler.sendEmptyMessage(UrpUrl.DATA_SUCCESS);
     }
 
     @Override
     public void getDataFail() {
-        handler.sendEmptyMessage(UrlUtil.DATA_FAIL);
+        handler.sendEmptyMessage(UrpUrl.DATA_FAIL);
     }
 
     @Override
     public void getDataSession() {
-        handler.sendEmptyMessage(UrlUtil.SESSION);
+        handler.sendEmptyMessage(UrpUrl.SESSION);
     }
 }

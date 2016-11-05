@@ -16,7 +16,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.jin123d.models.TzggModels;
-import com.jin123d.util.UrlUtil;
+import com.jin123d.util.UrpUrl;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -99,7 +99,7 @@ public class TzggActivity extends AppCompatActivity {
         new Thread() {
             public void run() {
                 try {
-                    String url = UrlUtil.URL_JWC + UrlUtil.URL_TZGG;
+                    String url = UrpUrl.URL_JWC + UrpUrl.URL_TZGG;
                     Document document = Jsoup.connect(url).timeout(5000).get();
                     Elements es = document.select("[style=height: 310px]").select("table[align=center]");
                     // Log.d("内容",es.toString());

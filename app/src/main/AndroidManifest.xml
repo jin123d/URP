@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name="com.jin123d.UrpApplication"
         android:allowBackup="true"
         android:icon="@mipmap/icon"
         android:label="@string/appname"

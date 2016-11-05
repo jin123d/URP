@@ -28,9 +28,9 @@ import android.widget.Toast;
 import com.jin123d.Interface.GetNetDataListener;
 import com.jin123d.adapter.MainAdapter;
 import com.jin123d.models.MainModels;
-import com.jin123d.util.NetUtil;
-import com.jin123d.util.Sp;
-import com.jin123d.util.UrlUtil;
+import com.jin123d.util.HttpUtil;
+import com.jin123d.util.UrpSp;
+import com.jin123d.util.UrpUrl;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -40,7 +40,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements GetNetDataListener {
-    private String cookie;
     private Toolbar toolbar;
     private List<MainModels> lists;
     private ListView listView;
@@ -52,13 +51,13 @@ public class MainActivity extends AppCompatActivity implements GetNetDataListene
     private TextView tv_head;
     private String tv;
     private ProgressDialog progressDialog;
-    private Sp sp;
+    private UrpSp sp;
 
 
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case UrlUtil.DATA_SUCCESS:
+                case UrpUrl.DATA_SUCCESS:
                     if (tv == null) {
                         System.out.println("空");
                     } else {
@@ -80,13 +79,13 @@ public class MainActivity extends AppCompatActivity implements GetNetDataListene
                         }
                     }
                     break;
-                case UrlUtil.DATA_FAIL:
+                case UrpUrl.DATA_FAIL:
                     progressDialog.dismiss();
                     Toast.makeText(MainActivity.this, getString(R.string.getDataTimeOut), Toast.LENGTH_SHORT).show();
                     reLogin();
 
                     break;
-                case UrlUtil.SESSION:
+                case UrpUrl.SESSION:
                     Toast.makeText(MainActivity.this, getString(R.string.loginFail), Toast.LENGTH_SHORT).show();
                     reLogin();
                     break;
@@ -99,9 +98,7 @@ public class MainActivity extends AppCompatActivity implements GetNetDataListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        sp = new Sp(MainActivity.this);
         // cookie = intent.getStringExtra("cookie");
-        cookie = sp.getCookie();
         initView();
         getData();
         getInfo();
@@ -195,9 +192,8 @@ public class MainActivity extends AppCompatActivity implements GetNetDataListene
                                 .setTitle("URP助手").setMessage("退出登录").setNegativeButton(getString(R.string.back), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Sp sp = new Sp(MainActivity.this);
-                                sp.setCookie(null);
-                                sp.setAuto(false);
+                                UrpSp.setCookie(null);
+                                UrpSp.setAuto(false);
                                 finish();
                                 start(LoginActivity.class);
                             }
@@ -295,7 +291,7 @@ public class MainActivity extends AppCompatActivity implements GetNetDataListene
     public void getInfo() {
         new Thread() {
             public void run() {
-                NetUtil.getPostData(UrlUtil.URL + UrlUtil.URL_XJXX, cookie, MainActivity.this);
+                HttpUtil.doGet(UrpUrl.URL + UrpUrl.URL_XJXX, MainActivity.this);
             }
 
         }.start();
@@ -310,16 +306,16 @@ public class MainActivity extends AppCompatActivity implements GetNetDataListene
     @Override
     public void getDataSuccess(String Data) {
         tv = Data;
-        handler.sendEmptyMessage(UrlUtil.DATA_SUCCESS);
+        handler.sendEmptyMessage(UrpUrl.DATA_SUCCESS);
     }
 
     @Override
     public void getDataFail() {
-        handler.sendEmptyMessage(UrlUtil.DATA_FAIL);
+        handler.sendEmptyMessage(UrpUrl.DATA_FAIL);
     }
 
     @Override
     public void getDataSession() {
-        handler.sendEmptyMessage(UrlUtil.SESSION);
+        handler.sendEmptyMessage(UrpUrl.SESSION);
     }
 }

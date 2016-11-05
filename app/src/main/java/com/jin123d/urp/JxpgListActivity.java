@@ -19,9 +19,8 @@ import com.jin123d.Interface.GetNetDataListener;
 import com.jin123d.adapter.JxpgAdapter;
 import com.jin123d.models.JxpgModels;
 import com.jin123d.models.PgInfoModels;
-import com.jin123d.util.NetUtil;
-import com.jin123d.util.Sp;
-import com.jin123d.util.UrlUtil;
+import com.jin123d.util.HttpUtil;
+import com.jin123d.util.UrpUrl;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -34,7 +33,6 @@ import java.util.List;
 
 
 public class JxpgListActivity extends AppCompatActivity implements GetNetDataListener {
-    private String cookie;
     private ProgressDialog progressDialog;
     private Toolbar toolbar;
     private ListView lv_jxpg;
@@ -48,12 +46,12 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetDataLis
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case UrlUtil.DATA_FAIL:
+                case UrpUrl.DATA_FAIL:
                     progressDialog.dismiss();
                     Toast.makeText(JxpgListActivity.this, getString(R.string.getDataTimeOut), Toast.LENGTH_SHORT).show();
                     finish();
                     break;
-                case UrlUtil.DATA_SUCCESS:
+                case UrpUrl.DATA_SUCCESS:
                     if (tv == null) {
                         System.out.println("空");
                     } else {
@@ -94,10 +92,10 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetDataLis
                         }
                     }
                     break;
-                case UrlUtil.SESSION:
+                case UrpUrl.SESSION:
                     Toast.makeText(JxpgListActivity.this, getString(R.string.loginFail), Toast.LENGTH_SHORT).show();
                     break;
-                case UrlUtil.PG_SUCCESS:
+                case UrpUrl.PG_SUCCESS:
                     Document doc = Jsoup.parse(tv);
                     progressDialog.setMessage(doc.text());
                     i++;
@@ -112,8 +110,6 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetDataLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jxpg_list);
-        Sp sp = new Sp(JxpgListActivity.this);
-        cookie = sp.getCookie();
         initView();
         getInfo();
     }
@@ -187,7 +183,7 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetDataLis
     public void getInfo() {
         new Thread() {
             public void run() {
-                NetUtil.getPostData(UrlUtil.URL + UrlUtil.URL_JXPG_LIST, cookie, JxpgListActivity.this);
+                HttpUtil.doGet(UrpUrl.URL + UrpUrl.URL_JXPG_LIST, JxpgListActivity.this);
             }
         }.start();
     }
@@ -256,8 +252,8 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetDataLis
     }
 
     public void loginPg(List<NameValuePair> params) {
-        NetUtil.doPost(
-                UrlUtil.URL + UrlUtil.URL_PG, cookie, params, new GetNetDataListener() {
+        HttpUtil.doPost(
+                UrpUrl.URL + UrpUrl.URL_PG, params, new GetNetDataListener() {
                     @Override
                     public void getDataSuccess(String Data) {
 
@@ -276,22 +272,22 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetDataLis
     }
 
     public void login(List<NameValuePair> params) {
-        NetUtil.doPost(
-                UrlUtil.URL + UrlUtil.URL_JXPG, cookie, params, new GetNetDataListener() {
+        HttpUtil.doPost(
+                UrpUrl.URL + UrpUrl.URL_JXPG, params, new GetNetDataListener() {
                     @Override
                     public void getDataSuccess(String Data) {
                         tv = Data;
-                        handler.sendEmptyMessage(UrlUtil.PG_SUCCESS);
+                        handler.sendEmptyMessage(UrpUrl.PG_SUCCESS);
                     }
 
                     @Override
                     public void getDataFail() {
-                        handler.sendEmptyMessage(UrlUtil.DATA_FAIL);
+                        handler.sendEmptyMessage(UrpUrl.DATA_FAIL);
                     }
 
                     @Override
                     public void getDataSession() {
-                        handler.sendEmptyMessage(UrlUtil.SESSION);
+                        handler.sendEmptyMessage(UrpUrl.SESSION);
                     }
                 });
 
@@ -301,17 +297,17 @@ public class JxpgListActivity extends AppCompatActivity implements GetNetDataLis
     @Override
     public void getDataSuccess(String Data) {
         tv = Data;
-        handler.sendEmptyMessage(UrlUtil.DATA_SUCCESS);
+        handler.sendEmptyMessage(UrpUrl.DATA_SUCCESS);
     }
 
     @Override
     public void getDataFail() {
-        handler.sendEmptyMessage(UrlUtil.DATA_FAIL);
+        handler.sendEmptyMessage(UrpUrl.DATA_FAIL);
     }
 
     @Override
     public void getDataSession() {
-        handler.sendEmptyMessage(UrlUtil.SESSION);
+        handler.sendEmptyMessage(UrpUrl.SESSION);
     }
 
 

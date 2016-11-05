@@ -1,14 +1,11 @@
 package com.jin123d.models;
 
-import android.widget.ImageView;
-import android.widget.TextView;
-
 /**
  * Created by jin123d on 2015/9/20.
- */
+ **/
 public class MainModels {
-    private String  img;
-    private String  name;
+    private String img;
+    private String name;
 
     public String getImg() {
         return img;

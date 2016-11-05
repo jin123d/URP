@@ -15,9 +15,8 @@ import android.widget.Toast;
 
 import com.jin123d.Interface.GetNetDataListener;
 import com.jin123d.Interface.GetPicListener;
-import com.jin123d.util.NetUtil;
-import com.jin123d.util.Sp;
-import com.jin123d.util.UrlUtil;
+import com.jin123d.util.HttpUtil;
+import com.jin123d.util.UrpUrl;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -25,7 +24,6 @@ import org.jsoup.select.Elements;
 
 public class XjxxActivity extends AppCompatActivity implements GetNetDataListener, GetPicListener {
     private TextView tv_html;
-    private String cookie;
     private String tv;
     private ProgressDialog progressDialog;
     private Bitmap bitmap;
@@ -36,7 +34,7 @@ public class XjxxActivity extends AppCompatActivity implements GetNetDataListene
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case UrlUtil.DATA_SUCCESS:
+                case UrpUrl.DATA_SUCCESS:
                     if (tv == null) {
                         System.out.println("空");
                     } else {
@@ -63,16 +61,16 @@ public class XjxxActivity extends AppCompatActivity implements GetNetDataListene
                         }
                     }
                     break;
-                case UrlUtil.DATA_FAIL:
+                case UrpUrl.DATA_FAIL:
                     progressDialog.dismiss();
                     Toast.makeText(XjxxActivity.this, getString(R.string.getDataTimeOut), Toast.LENGTH_SHORT).show();
                     finish();
                     break;
-                case UrlUtil.YZM_SUCCESS:
+                case UrpUrl.YZM_SUCCESS:
                     bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                     img_zp.setImageBitmap(bitmap);
                     break;
-                case UrlUtil.SESSION:
+                case UrpUrl.SESSION:
                     Toast.makeText(XjxxActivity.this, getString(R.string.loginFail), Toast.LENGTH_SHORT).show();
                     break;
             }
@@ -95,8 +93,6 @@ public class XjxxActivity extends AppCompatActivity implements GetNetDataListene
         });
         tv_html = (TextView) findViewById(R.id.tv_html);
         img_zp = (ImageView) findViewById(R.id.img_zp);
-        Sp sp = new Sp(XjxxActivity.this);
-        cookie = sp.getCookie();
         getInfo();
         progressDialog = new ProgressDialog(XjxxActivity.this);
         progressDialog.setMessage(getString(R.string.getData));
@@ -108,8 +104,8 @@ public class XjxxActivity extends AppCompatActivity implements GetNetDataListene
     public void getInfo() {
         new Thread() {
             public void run() {
-                NetUtil.getPostData(UrlUtil.URL + UrlUtil.URL_XJXX, cookie, XjxxActivity.this);
-                NetUtil.getZp(UrlUtil.URL + UrlUtil.URL_ZP, cookie, XjxxActivity.this);
+                HttpUtil.doGet(UrpUrl.URL + UrpUrl.URL_XJXX, XjxxActivity.this);
+                HttpUtil.getZp(XjxxActivity.this);
             }
         }.start();
     }
@@ -118,33 +114,33 @@ public class XjxxActivity extends AppCompatActivity implements GetNetDataListene
     @Override
     public void getDataSuccess(String Data) {
         tv = Data;
-        handler.sendEmptyMessage(UrlUtil.DATA_SUCCESS);
+        handler.sendEmptyMessage(UrpUrl.DATA_SUCCESS);
     }
 
     @Override
     public void getDataFail() {
-        handler.sendEmptyMessage(UrlUtil.DATA_FAIL);
+        handler.sendEmptyMessage(UrpUrl.DATA_FAIL);
 
     }
 
     @Override
     public void getDataSession() {
-        handler.sendEmptyMessage(UrlUtil.SESSION);
+        handler.sendEmptyMessage(UrpUrl.SESSION);
     }
 
     @Override
     public void getZpSuccess(byte[] bytes) {
         this.bytes = bytes;
-        handler.sendEmptyMessage(UrlUtil.YZM_SUCCESS);
+        handler.sendEmptyMessage(UrpUrl.YZM_SUCCESS);
     }
 
     @Override
     public void getZpFail() {
-        handler.sendEmptyMessage(UrlUtil.YZM_FAIL);
+        handler.sendEmptyMessage(UrpUrl.YZM_FAIL);
     }
 
     @Override
     public void getZpSession() {
-        handler.sendEmptyMessage(UrlUtil.SESSION);
+        handler.sendEmptyMessage(UrpUrl.SESSION);
     }
 }

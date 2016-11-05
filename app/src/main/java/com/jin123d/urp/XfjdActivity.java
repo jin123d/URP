@@ -11,16 +11,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jin123d.Interface.GetNetDataListener;
-import com.jin123d.util.NetUtil;
-import com.jin123d.util.Sp;
-import com.jin123d.util.UrlUtil;
+import com.jin123d.util.HttpUtil;
+import com.jin123d.util.UrpUrl;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 public class XfjdActivity extends AppCompatActivity implements GetNetDataListener {
-    private String cookie;
     private String tv;
     private ProgressDialog progressDialog;
     private TextView tv_1;
@@ -36,13 +34,13 @@ public class XfjdActivity extends AppCompatActivity implements GetNetDataListene
         public void handleMessage(Message msg) {
 
             switch (msg.what) {
-                case UrlUtil.DATA_FAIL:
+                case UrpUrl.DATA_FAIL:
                     progressDialog.dismiss();
 
                     Toast.makeText(XfjdActivity.this, getString(R.string.getDataTimeOut), Toast.LENGTH_SHORT).show();
                     finish();
                     break;
-                case UrlUtil.DATA_SUCCESS:
+                case UrpUrl.DATA_SUCCESS:
                     if (tv == null) {
                         System.out.println("空");
                     } else {
@@ -76,7 +74,7 @@ public class XfjdActivity extends AppCompatActivity implements GetNetDataListene
 
                     }
                     break;
-                case UrlUtil.SESSION:
+                case UrpUrl.SESSION:
                     Toast.makeText(XfjdActivity.this, getString(R.string.loginFail), Toast.LENGTH_SHORT).show();
                     break;
             }
@@ -87,10 +85,6 @@ public class XfjdActivity extends AppCompatActivity implements GetNetDataListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xfjd);
-
-        Sp sp = new Sp(XfjdActivity.this);
-        // cookie = intent.getStringExtra("cookie");
-        cookie = sp.getCookie();
         initView();
         getInfo();
     }
@@ -121,7 +115,7 @@ public class XfjdActivity extends AppCompatActivity implements GetNetDataListene
     public void getInfo() {
         new Thread() {
             public void run() {
-                NetUtil.getPostData(UrlUtil.URL + UrlUtil.URL_XFDJ, cookie, XfjdActivity.this);
+                HttpUtil.doGet(UrpUrl.URL + UrpUrl.URL_XFDJ, XfjdActivity.this);
             }
         }.start();
     }
@@ -130,16 +124,16 @@ public class XfjdActivity extends AppCompatActivity implements GetNetDataListene
     @Override
     public void getDataSuccess(String Data) {
         tv = Data;
-        handler.sendEmptyMessage(UrlUtil.DATA_SUCCESS);
+        handler.sendEmptyMessage(UrpUrl.DATA_SUCCESS);
     }
 
     @Override
     public void getDataFail() {
-        handler.sendEmptyMessage(UrlUtil.DATA_FAIL);
+        handler.sendEmptyMessage(UrpUrl.DATA_FAIL);
     }
 
     @Override
     public void getDataSession() {
-        handler.sendEmptyMessage(UrlUtil.SESSION);
+        handler.sendEmptyMessage(UrpUrl.SESSION);
     }
 }

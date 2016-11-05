@@ -1,5 +1,6 @@
 package com.jin123d.util;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.jin123d.Interface.GetNetDataListener;
@@ -9,6 +10,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
@@ -20,10 +22,12 @@ import org.apache.http.util.EntityUtils;
 import java.util.List;
 
 
-public class NetUtil {
-    public static void doPost(String url, String cookie, List<NameValuePair> nameValuePair, final GetNetDataListener getNetDataListener) {
+public class HttpUtil {
+
+    public static void doPost(String url, List<NameValuePair> nameValuePair, final GetNetDataListener getNetDataListener) {
         HttpPost http = new HttpPost(url);
         Log.d("URL", url);
+        String cookie = UrpSp.getCookie();
         if (cookie != null) {
             http.addHeader("Cookie", "JSESSIONID=" + cookie);
         }
@@ -50,8 +54,9 @@ public class NetUtil {
     }
 
 
-    public static void getPostData(String url, String cookie, final GetNetDataListener getData) {
-        HttpPost http = new HttpPost(url);
+    public static void doGet(String url, final GetNetDataListener getData) {
+        HttpGet http = new HttpGet(url);
+        String cookie = UrpSp.getCookie();
         if (cookie != null) {
             http.addHeader("Cookie", "JSESSIONID=" + cookie);
         }
@@ -77,8 +82,10 @@ public class NetUtil {
     }
 
 
-    public static void getZp(String url, String cookie, final GetPicListener getPicListener) {
-        HttpPost http = new HttpPost(url);
+    public static void getZp(final GetPicListener getPicListener) {
+        String url = TextUtils.concat(UrpUrl.URL, UrpUrl.URL_ZP).toString();
+        HttpGet http = new HttpGet(url);
+        String cookie = UrpSp.getCookie();
         if (cookie != null) {
             http.addHeader("Cookie", "JSESSIONID=" + cookie);
         }
