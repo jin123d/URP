@@ -3,6 +3,7 @@ package com.jin123d.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.lang.ref.SoftReference;
@@ -80,6 +81,7 @@ public class SpCache {
     }
 
     public static SpCache putString(String key, String val) {
+        val = TextUtils.isEmpty(val) ? "" : val;
         return getInstance().put(key, val);
     }
 

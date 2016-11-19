@@ -151,7 +151,7 @@ public class MainActivity extends BaseActivity {
                                 .setTitle(R.string.app_name).setMessage("退出登录").setNegativeButton(getString(R.string.back), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                UrpSpUtil.setCookie(null);
+                                UrpSpUtil.setCookie("");
                                 UrpSpUtil.setAuto(false);
                                 finish();
                                 start(LoginActivity.class);

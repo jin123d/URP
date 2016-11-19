@@ -77,7 +77,7 @@ public class HttpUtil {
      * @param bitmapCallback 回调
      */
     public static void getPic(Object tag, BitmapCallback bitmapCallback) {
-        OkGo.get(UrlUtil.getUrl(UrpUrl.URL_ZP)).tag(tag).execute(bitmapCallback);
+        OkGo.get(UrlUtil.getUrl(UrpUrl.URL_ZP)).tag(tag).headers(getHeader()).execute(bitmapCallback);
     }
 
     /**

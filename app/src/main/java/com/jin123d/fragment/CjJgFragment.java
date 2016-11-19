@@ -11,6 +11,7 @@ import com.jin123d.adapter.CjAdapter;
 import com.jin123d.app.BaseFragment;
 import com.jin123d.models.CjModels;
 import com.jin123d.urp.R;
+import com.jin123d.util.ErrorCode;
 import com.jin123d.util.HttpUtil;
 import com.jin123d.util.JsoupUtil;
 import com.jin123d.util.okgo.JsoupCallBack;
@@ -69,6 +70,11 @@ public class CjJgFragment extends BaseFragment {
                     lists.addAll(JsoupUtil.getAllCj(document));
                     adapter.notifyDataSetChanged();
                 }
+            }
+
+            @Override
+            public void onError(ErrorCode errorCode) {
+                super.onError(errorCode);
             }
         });
     }
