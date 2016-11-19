@@ -44,7 +44,7 @@
             android:name=".CjActivity"
             android:label="@string/title_activity_cj"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.Cj" />
         <activity
             android:name=".TzggActivity"
             android:label="@string/title_activity_tzgg"
@@ -71,7 +71,8 @@
         <activity
             android:name=".AboutActivity"
             android:label="@string/title_activity_about"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.Cj" />
 
     </application>
 

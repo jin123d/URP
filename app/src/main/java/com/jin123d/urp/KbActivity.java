@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jin123d.Interface.GetNetDataListener;
-import com.jin123d.util.HttpUtil;
 import com.jin123d.util.UrpUrl;
 
 import org.jsoup.Jsoup;
@@ -92,11 +91,6 @@ public class KbActivity extends AppCompatActivity implements GetNetDataListener 
     }
 
     public void getInfo() {
-        new Thread() {
-            public void run() {
-                HttpUtil.doGet(UrpUrl.URL + UrpUrl.URL_KB, KbActivity.this);
-            }
-        }.start();
     }
 
 

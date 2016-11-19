@@ -1,11 +1,14 @@
 package com.jin123d.util.okgo;
 
+import com.jin123d.util.ErrorCode;
 import com.jin123d.util.HttpUtil;
 import com.jin123d.util.JsoupUtil;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.request.BaseRequest;
 
 import org.jsoup.nodes.Document;
+
+import java.net.ConnectException;
 
 import okhttp3.Call;
 import okhttp3.Response;
@@ -15,20 +18,19 @@ import okhttp3.Response;
  **/
 
 public abstract class JsoupCallBack extends AbsCallback<Document> {
-    /**
-     * 登录失败，cookie 过期
-     */
-    public void onCookieExpire() {
 
-    }
 
     /**
      * 成功获取数据
      *
      * @param document document
-     * @param response response
      */
-    public void onSuccess(Document document, Response response) {
+    public void onSuccess(Document document) {
+
+    }
+
+
+    public void onError(ErrorCode errorCode) {
 
     }
 
@@ -50,9 +52,19 @@ public abstract class JsoupCallBack extends AbsCallback<Document> {
     @Override
     public void onSuccess(final Document document, Call call, Response response) {
         if (JsoupUtil.checkCookieExpire(document)) {
-            onCookieExpire();
+            onError(ErrorCode.CookieExpire);
         } else {
-            onSuccess(document, response);
+            onSuccess(document);
+        }
+    }
+
+    @Override
+    public void onError(Call call, Response response, Exception e) {
+        super.onError(call, response, e);
+        if (e instanceof ConnectException) {
+            onError(ErrorCode.TimeOUT);
+        } else {
+            onError(ErrorCode.UnKnowError);
         }
     }
 }

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.jin123d.app.BaseActivity;
 import com.jin123d.models.TzggModels;
 import com.jin123d.util.UrpUrl;
 
@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TzggActivity extends AppCompatActivity {
+public class TzggActivity extends BaseActivity {
     private ProgressDialog progressDialog;
     private Toolbar toolbar;
     private ListView listView;
@@ -54,19 +54,10 @@ public class TzggActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tzgg);
-        initView();
-        getInfo();
     }
 
-    private void initView() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+    @Override
+    protected void initView() {
         progressDialog = new ProgressDialog(TzggActivity.this);
         progressDialog.setMessage(getString(R.string.getData));
         progressDialog.setCanceledOnTouchOutside(false);
@@ -93,6 +84,11 @@ public class TzggActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    @Override
+    protected void initData() {
+        getInfo();
     }
 
     public void getInfo() {

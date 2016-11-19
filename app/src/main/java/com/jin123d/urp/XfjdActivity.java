@@ -9,7 +9,6 @@ import com.jin123d.app.BaseActivity;
 import com.jin123d.util.HttpUtil;
 import com.jin123d.util.okgo.JsoupCallBack;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
@@ -17,7 +16,6 @@ import okhttp3.Call;
 import okhttp3.Response;
 
 public class XfjdActivity extends BaseActivity {
-    private String tv;
     private ProgressDialog progressDialog;
     private TextView tv_1;
     private TextView tv_2;
@@ -60,13 +58,12 @@ public class XfjdActivity extends BaseActivity {
             public void onSuccess(Document document, Call call, Response response) {
                 super.onSuccess(document, call, response);
                 progressDialog.dismiss();
-                Document doc = Jsoup.parse(tv);
-                if (getString(R.string.webTitle).equals(doc.title())) {
+                if (getString(R.string.webTitle).equals(document.title())) {
                     Toast.makeText(XfjdActivity.this, getString(R.string.loginFail),
                             Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
-                    Elements es = doc.select("thead").select("tr");
+                    Elements es = document.select("thead").select("tr");
                     if (es.size() > 0) {
                         es = es.get(1).select("td");
                         if (es.size() > 6) {

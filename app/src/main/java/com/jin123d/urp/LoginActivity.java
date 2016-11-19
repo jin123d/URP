@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import com.jin123d.Interface.GetCodeListener;
 import com.jin123d.Interface.UrpUserListener;
 import com.jin123d.app.BaseActivity;
+import com.jin123d.util.ErrorCode;
 import com.jin123d.util.HttpUtil;
 import com.jin123d.util.JsoupUtil;
 import com.jin123d.util.UrpSpUtil;
@@ -172,8 +173,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             }
 
             @Override
-            public void onError(Call call, Response response, Exception e) {
-                super.onError(call, response, e);
+            public void onError(ErrorCode errorCode) {
+                super.onError(errorCode);
                 progressDialog.dismiss();
                 Snackbar.make(lin_main, getText(R.string.getDataTimeOut), Snackbar.LENGTH_SHORT)
                         .show();

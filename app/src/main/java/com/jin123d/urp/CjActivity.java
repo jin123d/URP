@@ -1,20 +1,20 @@
 package com.jin123d.urp;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.jin123d.app.BaseActivity;
 import com.jin123d.fragment.CjBjgFragment;
 import com.jin123d.fragment.CjJgFragment;
 
 
-public class CjActivity extends AppCompatActivity {
+public class CjActivity extends BaseActivity {
 
     private CjJgFragment jgFragment;
     private CjBjgFragment bjgFragment;
@@ -23,11 +23,10 @@ public class CjActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cj);
-        initView();
-
     }
 
-    void initView() {
+    @Override
+    protected void initView() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -38,8 +37,13 @@ public class CjActivity extends AppCompatActivity {
         });
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+        viewPager.setAdapter(new MyPagerAdapter(getFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    protected void initData() {
+
     }
 
 

@@ -55,7 +55,7 @@ public class MainAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.imageView.setImageResource(Integer.parseInt(lists.get(position).getImg()));
+        viewHolder.imageView.setImageResource(lists.get(position).getImgId());
         viewHolder.textView.setText(lists.get(position).getName());
 
         return convertView;

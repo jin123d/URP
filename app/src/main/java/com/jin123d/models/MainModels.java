@@ -4,15 +4,15 @@ package com.jin123d.models;
  * Created by jin123d on 2015/9/20.
  **/
 public class MainModels {
-    private String img;
+    private int imgId;
     private String name;
 
-    public String getImg() {
-        return img;
+    public int getImgId() {
+        return imgId;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setImgId(int imgId) {
+        this.imgId = imgId;
     }
 
     public String getName() {
@@ -23,8 +23,8 @@ public class MainModels {
         this.name = name;
     }
 
-    public MainModels(String img, String name) {
-        this.img = img;
+    public MainModels(int imgId, String name) {
+        this.imgId = imgId;
         this.name = name;
     }
 }

@@ -53,7 +53,7 @@ public class HttpUtil {
         params.put("zjh", zjh);
         params.put("mm", mm);
         params.put("v_yzm", v_yzm);
-        OkGo.post(UrlUtil.getUrl(UrpUrl.URL_YZM))
+        OkGo.post(UrlUtil.getUrl(UrpUrl.URL_LOGIN))
                 .params(params)
                 .tag(tag)//
                 .execute(callback);

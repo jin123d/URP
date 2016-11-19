@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -41,7 +40,6 @@ import okhttp3.Call;
 import okhttp3.Response;
 
 public class MainActivity extends BaseActivity {
-    private List<MainModels> lists;
     private ListView listView;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -73,25 +71,29 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         //getSupportActionBar().setHomeButtonEnabled(true); //设置返回键可用
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setTitleTextColor(Color.parseColor("#ffffff")); //设置标题颜色
         drawerToggle.syncState();
         drawerLayout.setDrawerListener(drawerToggle);
         listView = (ListView) findViewById(R.id.lv_main);
-        tv_head = (TextView) findViewById(R.id.tv_head);
+        if (navigationView != null) {
+            tv_head = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tv_head);
+        }
+
+
     }
 
     @Override
     protected void initData() {
         MainModels[] mainModels = new MainModels[7];
-        mainModels[0] = new MainModels(String.valueOf(R.mipmap.xjxx_2), getString(R.string.title_activity_xjxx));
-        mainModels[1] = new MainModels(String.valueOf(R.mipmap.cj_2), getString(R.string.cj));
-        mainModels[2] = new MainModels(String.valueOf(R.mipmap.zzsj_2), getString(R.string.title_activity_zjsj));
-        mainModels[3] = new MainModels(String.valueOf(R.mipmap.xfjd_2), getString(R.string.title_activity_xfjd));
-        mainModels[4] = new MainModels(String.valueOf(R.mipmap.kb_2), getString(R.string.bxqkb));
-        mainModels[5] = new MainModels(String.valueOf(R.mipmap.pj_2), getString(R.string.yjpj));
-        mainModels[6] = new MainModels(String.valueOf(R.mipmap.tzgg_2), getString(R.string.tzgg));
+        mainModels[0] = new MainModels(R.mipmap.xjxx_2, getString(R.string.title_activity_xjxx));
+        mainModels[1] = new MainModels(R.mipmap.cj_2, getString(R.string.cj));
+        mainModels[2] = new MainModels(R.mipmap.zzsj_2, getString(R.string.title_activity_zjsj));
+        mainModels[3] = new MainModels(R.mipmap.xfjd_2, getString(R.string.title_activity_xfjd));
+        mainModels[4] = new MainModels(R.mipmap.kb_2, getString(R.string.bxqkb));
+        mainModels[5] = new MainModels(R.mipmap.pj_2, getString(R.string.yjpj));
+        mainModels[6] = new MainModels(R.mipmap.tzgg_2, getString(R.string.tzgg));
+        List<MainModels> lists = new ArrayList<>();
         Collections.addAll(lists, mainModels);
-        lists = new ArrayList<>();
+
         MainAdapter adapter = new MainAdapter(lists, MainActivity.this);
         listView.setAdapter(adapter);
 
@@ -170,6 +172,7 @@ public class MainActivity extends BaseActivity {
         HttpUtil.getXjxx(this, new JsoupCallBack() {
             @Override
             public void onSuccess(Document document, Call call, Response response) {
+                progressDialog.dismiss();
                 Elements es = document.select("[width=275]");
                 if (es.size() > 0) {
                     tv_head.setText(TextUtils.concat(es.get(1).text(), "  ", es.get(0).text()));

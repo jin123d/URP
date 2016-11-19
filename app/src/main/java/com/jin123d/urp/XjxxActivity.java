@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jin123d.app.BaseActivity;
+import com.jin123d.util.ErrorCode;
 import com.jin123d.util.HttpUtil;
 import com.jin123d.util.okgo.JsoupCallBack;
 import com.lzy.okgo.callback.BitmapCallback;
@@ -35,13 +36,19 @@ public class XjxxActivity extends BaseActivity {
     public void getInfo() {
         HttpUtil.getXjxx(this, new JsoupCallBack() {
             @Override
-            public void onCookieExpire() {
-                super.onCookieExpire();
+            public void onError(ErrorCode errorCode) {
+                super.onError(errorCode);
+                progressDialog.dismiss();
+                if (errorCode == ErrorCode.CookieExpire) {
+                    Toast.makeText(XjxxActivity.this, getString(R.string.loginFail), Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
 
             @Override
-            public void onSuccess(Document document, Response response) {
-                super.onSuccess(document, response);
+            public void onSuccess(Document document) {
+                progressDialog.dismiss();
+                super.onSuccess(document);
                 Elements es = document.select("table[id=tblView]");
                 if (es.size() > 0) {
                     Elements es_2 = es.get(0).select("tr");
@@ -51,9 +58,6 @@ public class XjxxActivity extends BaseActivity {
                             tv_html.setText(tv_html.getText().toString() + "\n" + es_3.get(j).text());
                         }
                     }
-                } else {
-                    Toast.makeText(XjxxActivity.this, getString(R.string.loginFail), Toast.LENGTH_SHORT).show();
-                    finish();
                 }
             }
 

@@ -24,6 +24,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'com.android.support:support-v4:25.0.1'
+    compile 'com.android.support:support-v13:25.0.1'
     compile 'org.jsoup:jsoup:1.8.3'
     compile 'com.android.support:design:25.0.1'
     compile 'com.zhy:base-adapter:2.0.0'
