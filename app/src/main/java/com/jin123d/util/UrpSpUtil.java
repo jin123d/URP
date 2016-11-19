@@ -6,7 +6,7 @@ import android.text.TextUtils;
 /**
  * Created by jin123d on 2015/9/16.
  **/
-public class UrpSp {
+public class UrpSpUtil {
     private static final String COOKIE = "cookie";
     private static final String Zjh = "zjh";
     private static final String Mm = "mm";
@@ -28,8 +28,8 @@ public class UrpSp {
     }
 
     public static void setCookie(String cookie) {
-        SpCache.putString(COOKIE, cookie);
         spCookie = cookie;
+        SpCache.putString(COOKIE, cookie);
     }
 
 

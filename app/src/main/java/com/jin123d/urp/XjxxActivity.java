@@ -2,145 +2,95 @@ package com.jin123d.urp;
 
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jin123d.Interface.GetNetDataListener;
-import com.jin123d.Interface.GetPicListener;
+import com.jin123d.app.BaseActivity;
 import com.jin123d.util.HttpUtil;
-import com.jin123d.util.UrpUrl;
+import com.jin123d.util.okgo.JsoupCallBack;
+import com.lzy.okgo.callback.BitmapCallback;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-public class XjxxActivity extends AppCompatActivity implements GetNetDataListener, GetPicListener {
+import okhttp3.Call;
+import okhttp3.Response;
+
+public class XjxxActivity extends BaseActivity {
     private TextView tv_html;
-    private String tv;
     private ProgressDialog progressDialog;
-    private Bitmap bitmap;
     private ImageView img_zp;
-    private byte[] bytes;
-    private Toolbar toolbar;
-
-    Handler handler = new Handler() {
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case UrpUrl.DATA_SUCCESS:
-                    if (tv == null) {
-                        System.out.println("空");
-                    } else {
-                        progressDialog.dismiss();
-                        Document doc = Jsoup.parse(tv);
-                        if (getString(R.string.webTitle).equals(doc.title())) {
-                            Toast.makeText(XjxxActivity.this, getString(R.string.loginFail),
-                                    Toast.LENGTH_SHORT).show();
-                            finish();
-                        } else {
-                            Elements es = doc.select("table[id=tblView]");
-                            if (es.size() > 0) {
-                                Elements es_2 = es.get(0).select("tr");
-                                for (int i = 0; i < es_2.size(); i++) {
-                                    Elements es_3 = es_2.get(i).select("td");
-                                    for (int j = 0; j < es_3.size(); j++) {
-                                        tv_html.setText(tv_html.getText().toString() + "\n" + es_3.get(j).text());
-                                    }
-                                }
-                            } else {
-                                Toast.makeText(XjxxActivity.this, getString(R.string.loginFail), Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
-                        }
-                    }
-                    break;
-                case UrpUrl.DATA_FAIL:
-                    progressDialog.dismiss();
-                    Toast.makeText(XjxxActivity.this, getString(R.string.getDataTimeOut), Toast.LENGTH_SHORT).show();
-                    finish();
-                    break;
-                case UrpUrl.YZM_SUCCESS:
-                    bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                    img_zp.setImageBitmap(bitmap);
-                    break;
-                case UrpUrl.SESSION:
-                    Toast.makeText(XjxxActivity.this, getString(R.string.loginFail), Toast.LENGTH_SHORT).show();
-                    break;
-            }
-
-        }
-    };
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_xjxx);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        getInfo();
+
+    }
+
+    public void getInfo() {
+        HttpUtil.getXjxx(this, new JsoupCallBack() {
             @Override
-            public void onClick(View v) {
-                finish();
+            public void onCookieExpire() {
+                super.onCookieExpire();
+            }
+
+            @Override
+            public void onSuccess(Document document, Response response) {
+                super.onSuccess(document, response);
+                Elements es = document.select("table[id=tblView]");
+                if (es.size() > 0) {
+                    Elements es_2 = es.get(0).select("tr");
+                    for (int i = 0; i < es_2.size(); i++) {
+                        Elements es_3 = es_2.get(i).select("td");
+                        for (int j = 0; j < es_3.size(); j++) {
+                            tv_html.setText(tv_html.getText().toString() + "\n" + es_3.get(j).text());
+                        }
+                    }
+                } else {
+                    Toast.makeText(XjxxActivity.this, getString(R.string.loginFail), Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onError(Call call, Response response, Exception e) {
+                super.onError(call, response, e);
+                progressDialog.dismiss();
             }
         });
+
+        HttpUtil.getPic(this, new BitmapCallback() {
+            @Override
+            public void onSuccess(Bitmap bitmap, Call call, Response response) {
+                img_zp.setImageBitmap(bitmap);
+            }
+
+            @Override
+            public void onError(Call call, Response response, Exception e) {
+                super.onError(call, response, e);
+                progressDialog.dismiss();
+            }
+        });
+    }
+
+
+    @Override
+    protected void initView() {
         tv_html = (TextView) findViewById(R.id.tv_html);
         img_zp = (ImageView) findViewById(R.id.img_zp);
-        getInfo();
+    }
+
+    @Override
+    protected void initData() {
         progressDialog = new ProgressDialog(XjxxActivity.this);
         progressDialog.setMessage(getString(R.string.getData));
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setCancelable(false);
         progressDialog.show();
-    }
-
-    public void getInfo() {
-        new Thread() {
-            public void run() {
-                HttpUtil.doGet(UrpUrl.URL + UrpUrl.URL_XJXX, XjxxActivity.this);
-                HttpUtil.getZp(XjxxActivity.this);
-            }
-        }.start();
-    }
-
-
-    @Override
-    public void getDataSuccess(String Data) {
-        tv = Data;
-        handler.sendEmptyMessage(UrpUrl.DATA_SUCCESS);
-    }
-
-    @Override
-    public void getDataFail() {
-        handler.sendEmptyMessage(UrpUrl.DATA_FAIL);
-
-    }
-
-    @Override
-    public void getDataSession() {
-        handler.sendEmptyMessage(UrpUrl.SESSION);
-    }
-
-    @Override
-    public void getZpSuccess(byte[] bytes) {
-        this.bytes = bytes;
-        handler.sendEmptyMessage(UrpUrl.YZM_SUCCESS);
-    }
-
-    @Override
-    public void getZpFail() {
-        handler.sendEmptyMessage(UrpUrl.YZM_FAIL);
-    }
-
-    @Override
-    public void getZpSession() {
-        handler.sendEmptyMessage(UrpUrl.SESSION);
     }
 }

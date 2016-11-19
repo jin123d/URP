@@ -16,11 +16,8 @@ import com.jin123d.fragment.CjJgFragment;
 
 public class CjActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
-    private TabLayout tabLayout;
     private CjJgFragment jgFragment;
     private CjBjgFragment bjgFragment;
-    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +28,7 @@ public class CjActivity extends AppCompatActivity {
     }
 
     void initView() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,8 +36,8 @@ public class CjActivity extends AppCompatActivity {
                 finish();
             }
         });
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        viewPager = (ViewPager) findViewById(R.id.pager);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
     }
@@ -48,7 +45,7 @@ public class CjActivity extends AppCompatActivity {
 
     public class MyPagerAdapter extends FragmentPagerAdapter {
 
-        public MyPagerAdapter(FragmentManager fm) {
+        private MyPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 

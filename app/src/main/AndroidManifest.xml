@@ -5,14 +5,14 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.jin123d.UrpApplication"
+        android:name="com.jin123d.app.UrpApplication"
         android:allowBackup="true"
         android:icon="@mipmap/icon"
-        android:label="@string/appname"
+        android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
-            android:label="@string/appname">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,43 +22,56 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.Statues" />
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".XjxxActivity"
-            android:label="@string/title_activity_xjxx" />
+            android:label="@string/title_activity_xjxx"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".XfjdActivity"
-            android:label="@string/title_activity_xfjd" />
+            android:label="@string/title_activity_xfjd"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ZjsjActivity"
-            android:label="@string/title_activity_zjsj" />
+            android:label="@string/title_activity_zjsj"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".KbActivity"
-            android:label="@string/title_activity_kb" />
+            android:label="@string/title_activity_kb"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".CjActivity"
-            android:label="@string/title_activity_cj" />
+            android:label="@string/title_activity_cj"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".TzggActivity"
-            android:label="@string/title_activity_tzgg" />
+            android:label="@string/title_activity_tzgg"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".NewsActivity"
-            android:label="@string/title_activity_news" />
+            android:label="@string/title_activity_news"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".JxpgListActivity"
-            android:label="@string/title_activity_jxpg_list" />
+            android:label="@string/title_activity_jxpg_list"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".Loading"
             android:label="@string/title_activity_loading" />
         <activity
             android:name=".WebActivity"
-            android:label="@string/title_activity_about" />
+            android:label="@string/title_activity_about"
+            android:parentActivityName=".LoginActivity" />
         <activity
-            android:name=".ChangeColor"
-            android:label="@string/title_activity_change_color" />
+            android:name=".ChangeColorActivity"
+            android:label="@string/title_activity_change_color"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".AboutActivity"
-            android:label="@string/title_activity_about" />
+            android:label="@string/title_activity_about"
+            android:parentActivityName=".MainActivity" />
 
     </application>
 

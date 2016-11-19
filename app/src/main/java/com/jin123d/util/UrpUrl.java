@@ -2,7 +2,8 @@ package com.jin123d.util;
 
 /**
  * Created by jin123d on 2015/9/14.
- */
+ * urp网址
+ **/
 public class UrpUrl {
     public static String JWCURL = "http://219.226.101.61/jiawu3.html";
     //主url

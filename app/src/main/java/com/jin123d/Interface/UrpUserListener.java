@@ -4,8 +4,6 @@ import com.jin123d.models.CjModels;
 import com.jin123d.models.PgInfoModels;
 import com.jin123d.models.ZjsjModels;
 
-import org.jsoup.nodes.Document;
-
 import java.util.List;
 
 /**
@@ -19,7 +17,7 @@ public class UrpUserListener {
     }
 
     public interface UserStateListener extends IsLoginListener {
-        void loginSuccess(Document doc);
+        void loginSuccess();
     }
 
 

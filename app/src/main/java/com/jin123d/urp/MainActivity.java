@@ -6,16 +6,14 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,88 +23,41 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jin123d.Interface.GetNetDataListener;
 import com.jin123d.adapter.MainAdapter;
+import com.jin123d.app.BaseActivity;
 import com.jin123d.models.MainModels;
 import com.jin123d.util.HttpUtil;
-import com.jin123d.util.UrpSp;
-import com.jin123d.util.UrpUrl;
+import com.jin123d.util.UrpSpUtil;
+import com.jin123d.util.okgo.JsoupCallBack;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements GetNetDataListener {
-    private Toolbar toolbar;
+import okhttp3.Call;
+import okhttp3.Response;
+
+public class MainActivity extends BaseActivity {
     private List<MainModels> lists;
     private ListView listView;
-    private MainAdapter adapter;
-    private MainModels[] mainModele;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
     private NavigationView navigationView;
     private TextView tv_head;
-    private String tv;
     private ProgressDialog progressDialog;
-    private UrpSp sp;
-
-
-    Handler handler = new Handler() {
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case UrpUrl.DATA_SUCCESS:
-                    if (tv == null) {
-                        System.out.println("空");
-                    } else {
-                        progressDialog.dismiss();
-                        Document doc = Jsoup.parse(tv);
-                        if (getString(R.string.webTitle).equals(doc.title())) {
-                            Toast.makeText(MainActivity.this, getString(R.string.loginFail),
-                                    Toast.LENGTH_SHORT).show();
-                            reLogin();
-
-                        } else {
-                            Elements es = doc.select("[width=275]");
-                            if (es.size() > 0) {
-                                tv_head.setText(es.get(1).text() + "  " + es.get(0).text());
-                            } else {
-                                Toast.makeText(MainActivity.this, getString(R.string.loginFail), Toast.LENGTH_SHORT).show();
-                                reLogin();
-                            }
-                        }
-                    }
-                    break;
-                case UrpUrl.DATA_FAIL:
-                    progressDialog.dismiss();
-                    Toast.makeText(MainActivity.this, getString(R.string.getDataTimeOut), Toast.LENGTH_SHORT).show();
-                    reLogin();
-
-                    break;
-                case UrpUrl.SESSION:
-                    Toast.makeText(MainActivity.this, getString(R.string.loginFail), Toast.LENGTH_SHORT).show();
-                    reLogin();
-                    break;
-            }
-
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // cookie = intent.getStringExtra("cookie");
-        initView();
-        getData();
         getInfo();
     }
 
-
-    void initView() {
-
+    @Override
+    protected void initView() {
         progressDialog = new ProgressDialog(MainActivity.this);
         progressDialog.setMessage(getString(R.string.getUserData));
         progressDialog.setCanceledOnTouchOutside(false);
@@ -115,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements GetNetDataListene
         /**
          * 初始化各种控件
          * */
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         navigationView = (NavigationView) findViewById(R.id.navigation);
         drawerToggle = new ActionBarDrawerToggle(MainActivity.this, drawerLayout, R.string.hello_world, R.string.hello_world);
@@ -127,9 +78,21 @@ public class MainActivity extends AppCompatActivity implements GetNetDataListene
         drawerLayout.setDrawerListener(drawerToggle);
         listView = (ListView) findViewById(R.id.lv_main);
         tv_head = (TextView) findViewById(R.id.tv_head);
+    }
 
+    @Override
+    protected void initData() {
+        MainModels[] mainModels = new MainModels[7];
+        mainModels[0] = new MainModels(String.valueOf(R.mipmap.xjxx_2), getString(R.string.title_activity_xjxx));
+        mainModels[1] = new MainModels(String.valueOf(R.mipmap.cj_2), getString(R.string.cj));
+        mainModels[2] = new MainModels(String.valueOf(R.mipmap.zzsj_2), getString(R.string.title_activity_zjsj));
+        mainModels[3] = new MainModels(String.valueOf(R.mipmap.xfjd_2), getString(R.string.title_activity_xfjd));
+        mainModels[4] = new MainModels(String.valueOf(R.mipmap.kb_2), getString(R.string.bxqkb));
+        mainModels[5] = new MainModels(String.valueOf(R.mipmap.pj_2), getString(R.string.yjpj));
+        mainModels[6] = new MainModels(String.valueOf(R.mipmap.tzgg_2), getString(R.string.tzgg));
+        Collections.addAll(lists, mainModels);
         lists = new ArrayList<>();
-        adapter = new MainAdapter(lists, MainActivity.this);
+        MainAdapter adapter = new MainAdapter(lists, MainActivity.this);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -155,14 +118,11 @@ public class MainActivity extends AppCompatActivity implements GetNetDataListene
                     case 4:
                         //本学期课表
                         Snackbar.make(listView, "开发中1111", Snackbar.LENGTH_SHORT).show();
-                        // start(KbActivity.class);
                         break;
                     case 5:
                         //一键评教
-                        // Snackbar.make(listView, "开发中", Snackbar.LENGTH_SHORT).show();
                         start(JxpgListActivity.class);
                         break;
-
                     case 6:
                         start(TzggActivity.class);
                         break;
@@ -174,9 +134,6 @@ public class MainActivity extends AppCompatActivity implements GetNetDataListene
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.navItem1:
-                       /* String str = urlUtil.URL;
-                        Snackbar.make(listView, str, Snackbar.LENGTH_SHORT)
-                                .show();*/
                         Snackbar.make(listView, "开发中", Snackbar.LENGTH_SHORT).show();
                         break;
                     case R.id.navItem2:
@@ -189,11 +146,11 @@ public class MainActivity extends AppCompatActivity implements GetNetDataListene
                     case R.id.navItem4:
                         //退出
                         new AlertDialog.Builder(MainActivity.this)
-                                .setTitle("URP助手").setMessage("退出登录").setNegativeButton(getString(R.string.back), new DialogInterface.OnClickListener() {
+                                .setTitle(R.string.app_name).setMessage("退出登录").setNegativeButton(getString(R.string.back), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                UrpSp.setCookie(null);
-                                UrpSp.setAuto(false);
+                                UrpSpUtil.setCookie(null);
+                                UrpSpUtil.setAuto(false);
                                 finish();
                                 start(LoginActivity.class);
                             }
@@ -205,25 +162,44 @@ public class MainActivity extends AppCompatActivity implements GetNetDataListene
         });
     }
 
-    private void getData() {
-        mainModele = new MainModels[7];
-        mainModele[0] = new MainModels(String.valueOf(R.mipmap.xjxx_2), getString(R.string.title_activity_xjxx));
-        mainModele[1] = new MainModels(String.valueOf(R.mipmap.cj_2), getString(R.string.cj));
-        mainModele[2] = new MainModels(String.valueOf(R.mipmap.zzsj_2), getString(R.string.title_activity_zjsj));
-        mainModele[3] = new MainModels(String.valueOf(R.mipmap.xfjd_2), getString(R.string.title_activity_xfjd));
-        mainModele[4] = new MainModels(String.valueOf(R.mipmap.kb_2), getString(R.string.bxqkb));
-        mainModele[5] = new MainModels(String.valueOf(R.mipmap.pj_2), getString(R.string.yjpj));
-        mainModele[6] = new MainModels(String.valueOf(R.mipmap.tzgg_2), getString(R.string.tzgg));
-        for (int i = 0; i < mainModele.length; i++) {
-            lists.add(mainModele[i]);
-        }
-        adapter.notifyDataSetChanged();
+
+    /**
+     * 获取个人信息/姓名
+     */
+    public void getInfo() {
+        HttpUtil.getXjxx(this, new JsoupCallBack() {
+            @Override
+            public void onSuccess(Document document, Call call, Response response) {
+                Elements es = document.select("[width=275]");
+                if (es.size() > 0) {
+                    tv_head.setText(TextUtils.concat(es.get(1).text(), "  ", es.get(0).text()));
+                } else {
+                    Toast.makeText(MainActivity.this, getString(R.string.loginFail), Toast.LENGTH_SHORT).show();
+                    reLogin();
+                }
+            }
+
+            @Override
+            public void onError(Call call, Response response, Exception e) {
+                super.onError(call, response, e);
+                progressDialog.dismiss();
+                Toast.makeText(MainActivity.this, getString(R.string.getDataTimeOut), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /**
+     * 重新登录
+     */
+    private void reLogin() {
+        UrpSpUtil.setAuto(false);
+        start(LoginActivity.class);
+        finish();
     }
 
 
     void start(Class cls) {
         Intent intent = new Intent();
-        // intent.putExtra("cookie", cookie);
         intent.setClass(MainActivity.this, cls);
         startActivity(intent);
     }
@@ -260,14 +236,6 @@ public class MainActivity extends AppCompatActivity implements GetNetDataListene
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-           /* case R.id.action_settings:
-                String str = urlUtil.URL;
-                Snackbar.make(listView, str, Snackbar.LENGTH_SHORT)
-                        .show();
-                break;
-            case R.id.action_about:
-                start(AboutActivity.class);
-                break;*/
             case android.R.id.home:
                 if (drawerLayout.isDrawerOpen(GravityCompat.START)
                         ) {
@@ -286,36 +254,5 @@ public class MainActivity extends AppCompatActivity implements GetNetDataListene
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    public void getInfo() {
-        new Thread() {
-            public void run() {
-                HttpUtil.doGet(UrpUrl.URL + UrpUrl.URL_XJXX, MainActivity.this);
-            }
-
-        }.start();
-    }
-
-    private void reLogin() {
-        sp.setAuto(false);
-        start(LoginActivity.class);
-        finish();
-    }
-
-    @Override
-    public void getDataSuccess(String Data) {
-        tv = Data;
-        handler.sendEmptyMessage(UrpUrl.DATA_SUCCESS);
-    }
-
-    @Override
-    public void getDataFail() {
-        handler.sendEmptyMessage(UrpUrl.DATA_FAIL);
-    }
-
-    @Override
-    public void getDataSession() {
-        handler.sendEmptyMessage(UrpUrl.SESSION);
     }
 }

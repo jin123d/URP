@@ -2,7 +2,7 @@ package com.jin123d.models;
 
 /**
  * Created by jin123d on 2015/11/7.
- */
+ **/
 public class PgInfoModels {
     private String wjbm; //问卷编码 wjbm	0000000083
     private String bpr; //被评人 bpr	104226

@@ -13,7 +13,7 @@
     <string name="mm">记住密码</string>
     <string name="auto_login">自动登录(建议不要使用)</string>
     <string name="login">URP登录</string>
-    <string name="appname">TyutURP</string>
+    <string name="app_name">TyutURP</string>
     <string name="getData">获取数据中</string>
     <string name="getUserData">获取用户信息中</string>
     <string name="getDataTimeOut">获取数据超时</string>

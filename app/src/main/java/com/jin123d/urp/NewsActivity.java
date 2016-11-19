@@ -7,9 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
 import com.jin123d.util.UrpUrl;
@@ -23,7 +21,6 @@ import java.io.IOException;
 public class NewsActivity extends AppCompatActivity {
     private String tv;
     private ProgressDialog progressDialog;
-    private Toolbar toolbar;
     private TextView textView;
     String URL;
 
@@ -51,14 +48,6 @@ public class NewsActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
         progressDialog = new ProgressDialog(NewsActivity.this);
         progressDialog.setMessage(getString(R.string.getData));
         progressDialog.setCanceledOnTouchOutside(false);
