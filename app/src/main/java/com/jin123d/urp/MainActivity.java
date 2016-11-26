@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.jin123d.adapter.MainAdapter;
 import com.jin123d.app.BaseActivity;
 import com.jin123d.models.MainModels;
+import com.jin123d.util.ErrorCode;
 import com.jin123d.util.HttpUtil;
 import com.jin123d.util.UrpSpUtil;
 import com.jin123d.util.okgo.JsoupCallBack;
@@ -36,7 +37,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import okhttp3.Call;
 import okhttp3.Response;
 
 public class MainActivity extends BaseActivity {
@@ -171,7 +171,7 @@ public class MainActivity extends BaseActivity {
     public void getInfo() {
         HttpUtil.getXjxx(this, new JsoupCallBack() {
             @Override
-            public void onSuccess(Document document, Call call, Response response) {
+            public void onSuccess(Document document) {
                 progressDialog.dismiss();
                 Elements es = document.select("[width=275]");
                 if (es.size() > 0) {
@@ -183,8 +183,8 @@ public class MainActivity extends BaseActivity {
             }
 
             @Override
-            public void onError(Call call, Response response, Exception e) {
-                super.onError(call, response, e);
+            public void onError(ErrorCode errorCode, Response response) {
+                super.onError(errorCode, response);
                 progressDialog.dismiss();
                 Toast.makeText(MainActivity.this, getString(R.string.getDataTimeOut), Toast.LENGTH_SHORT).show();
             }

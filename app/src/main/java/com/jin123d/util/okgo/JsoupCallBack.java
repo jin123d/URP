@@ -1,5 +1,9 @@
 package com.jin123d.util.okgo;
 
+import android.widget.Toast;
+
+import com.jin123d.app.UrpApplication;
+import com.jin123d.urp.R;
 import com.jin123d.util.ErrorCode;
 import com.jin123d.util.HttpUtil;
 import com.jin123d.util.JsoupUtil;
@@ -19,18 +23,21 @@ import okhttp3.Response;
 
 public abstract class JsoupCallBack extends AbsCallback<Document> {
 
-
     /**
      * 成功获取数据
      *
      * @param document document
      */
-    public void onSuccess(Document document) {
-
-    }
+    protected abstract void onSuccess(Document document);
 
 
-    public void onError(ErrorCode errorCode) {
+    /**
+     * 获取数据失败，非抽象方法，可重写
+     *
+     * @param errorCode 错误码
+     * @param response  返回数据
+     */
+    public void onError(ErrorCode errorCode, Response response) {
 
     }
 
@@ -52,8 +59,11 @@ public abstract class JsoupCallBack extends AbsCallback<Document> {
     @Override
     public void onSuccess(final Document document, Call call, Response response) {
         if (JsoupUtil.checkCookieExpire(document)) {
-            onError(ErrorCode.CookieExpire);
+            //cookie过期
+            onError(ErrorCode.CookieExpire, response);
+            Toast.makeText(UrpApplication.getContext(), R.string.loginFail, Toast.LENGTH_SHORT).show();
         } else {
+            //获取数据成功
             onSuccess(document);
         }
     }
@@ -61,10 +71,14 @@ public abstract class JsoupCallBack extends AbsCallback<Document> {
     @Override
     public void onError(Call call, Response response, Exception e) {
         super.onError(call, response, e);
+        e.printStackTrace();
         if (e instanceof ConnectException) {
-            onError(ErrorCode.TimeOUT);
+            //获取数据超时
+            onError(ErrorCode.TimeOUT, response);
+            Toast.makeText(UrpApplication.getContext(), R.string.getDataTimeOut, Toast.LENGTH_SHORT).show();
         } else {
-            onError(ErrorCode.UnKnowError);
+            //其他错误
+            onError(ErrorCode.UnKnowError, response);
         }
     }
 }

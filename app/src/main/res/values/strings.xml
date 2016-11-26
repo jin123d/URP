@@ -52,5 +52,6 @@
     <string name="other">其他</string>
     <string name="thanks"> 感谢:\n\nJsoup\nTYUT综合教务系统</string>
     <string name="title_activity_test">TestActivity</string>
+    <string name="codeIsNull">验证码为空</string>
 
 </resources>

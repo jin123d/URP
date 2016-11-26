@@ -1,11 +1,9 @@
 package com.jin123d.fragment;
 
-import android.app.ProgressDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.jin123d.adapter.CjAdapter;
 import com.jin123d.app.BaseFragment;
@@ -21,14 +19,12 @@ import org.jsoup.nodes.Document;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Call;
 import okhttp3.Response;
 
 /**
  * Created by jin123d on 2015/9/14.
  **/
 public class CjJgFragment extends BaseFragment {
-    private ProgressDialog progressDialog;
     private CjAdapter adapter;
     private List<CjModels> lists;
 
@@ -41,9 +37,7 @@ public class CjJgFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         ListView lv_zjsj = (ListView) view.findViewById(R.id.lv_zjsj);
-        progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage(getString(R.string.getJg));
-        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
         lists = new ArrayList<>();
         adapter = new CjAdapter(lists, getActivity());
@@ -59,22 +53,17 @@ public class CjJgFragment extends BaseFragment {
     void getInfo() {
         HttpUtil.getAllCjList(this, new JsoupCallBack() {
             @Override
-            public void onSuccess(Document document, Call call, Response response) {
-                progressDialog.dismiss();
-                if (getText(R.string.webTitle).equals(document.title())) {
-                    Toast.makeText(getActivity(), getText(R.string.loginFail),
-                            Toast.LENGTH_SHORT).show();
-                    getActivity().finish();
-                } else {
-                    lists.clear();
-                    lists.addAll(JsoupUtil.getAllCj(document));
-                    adapter.notifyDataSetChanged();
-                }
+            public void onSuccess(Document document) {
+                progressDialogDismiss();
+                lists.clear();
+                lists.addAll(JsoupUtil.getAllCj(document));
+                adapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onError(ErrorCode errorCode) {
-                super.onError(errorCode);
+            public void onError(ErrorCode errorCode, Response response) {
+                super.onError(errorCode, response);
+                progressDialogDismiss();
             }
         });
     }

@@ -1,18 +1,28 @@
 package com.jin123d.app;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.jin123d.util.UrpSpUtil;
 import com.lzy.okgo.OkGo;
+
+import java.lang.ref.WeakReference;
 
 /**
  * Created by jin123d on 11/5 0005.
  **/
 
 public class UrpApplication extends Application {
+    private static WeakReference<Context> context;
+
+    public static Context getContext() {
+        return context.get();
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
+        context = new WeakReference<>(getApplicationContext());
         //必须调用初始化
         OkGo.init(this);
         //好处是全局参数统一,特定请求可以特别定制参数

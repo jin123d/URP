@@ -1,6 +1,5 @@
 package com.jin123d.fragment;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -15,6 +14,7 @@ import com.jin123d.adapter.CjAdapter;
 import com.jin123d.app.BaseFragment;
 import com.jin123d.models.CjModels;
 import com.jin123d.urp.R;
+import com.jin123d.util.ErrorCode;
 import com.jin123d.util.HttpUtil;
 import com.jin123d.util.okgo.JsoupCallBack;
 
@@ -24,14 +24,12 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Call;
 import okhttp3.Response;
 
 /**
  * Created by jin123d on 2015/9/14.
  **/
 public class CjBjgFragment extends BaseFragment {
-    private ProgressDialog progressDialog;
     private ListView lv_sbjg;
     private ListView lv_cbjg;
     private CjAdapter adapter;
@@ -52,9 +50,7 @@ public class CjBjgFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage(getString(R.string.getBjg));
-        progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
         lists = new ArrayList<>();
         lists2 = new ArrayList<>();
@@ -73,13 +69,9 @@ public class CjBjgFragment extends BaseFragment {
     void getInfo() {
         HttpUtil.getBJgList(this, new JsoupCallBack() {
             @Override
-            public void onSuccess(Document document, Call call, Response response) {
-                progressDialog.dismiss();
-                if (getText(R.string.webTitle).equals(document.title())) {
-                    Toast.makeText(getActivity(), getText(R.string.loginFail),
-                            Toast.LENGTH_SHORT).show();
-                    getActivity().finish();
-                } else if (getText(R.string.webTitleError).equals(document.title())) {
+            public void onSuccess(Document document) {
+                progressDialogDismiss();
+                if (getText(R.string.webTitleError).equals(document.title())) {
                     String ErrorContent = document.body().text();
                     AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
                     dialog.setTitle(document.title());
@@ -124,6 +116,12 @@ public class CjBjgFragment extends BaseFragment {
                         getActivity().finish();
                     }
                 }
+            }
+
+            @Override
+            public void onError(ErrorCode errorCode, Response response) {
+                super.onError(errorCode, response);
+                progressDialogDismiss();
             }
         });
     }

@@ -1,6 +1,5 @@
 package com.jin123d.urp;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,14 +27,13 @@ import java.util.List;
 
 
 public class TzggActivity extends BaseActivity {
-    private ProgressDialog progressDialog;
     private ListView listView;
     private List<String> lists;
     private ArrayAdapter<String> arrayAdapter;
     private List<TzggModels> list_tz;
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
-            progressDialog.dismiss();
+            progressDialogDismiss();
             switch (msg.what) {
                 case 1:
                     arrayAdapter.notifyDataSetChanged();
@@ -56,11 +54,6 @@ public class TzggActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        progressDialog = new ProgressDialog(TzggActivity.this);
-        progressDialog.setMessage(getString(R.string.getData));
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.setCancelable(false);
-        progressDialog.show();
         listView = (ListView) findViewById(R.id.lv_news);
         lists = new ArrayList<>();
         list_tz = new ArrayList<>();
@@ -86,6 +79,7 @@ public class TzggActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        progressDialogShow();
         getInfo();
     }
 

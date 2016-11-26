@@ -7,9 +7,6 @@
             <item
                 android:drawable="@color/colorPrimary"
                 android:state_pressed="false" />
-
         </selector>
-
-
     </item>
 </ripple>

@@ -127,7 +127,7 @@ public class HttpUtil {
         httpParams.put("oper", "wjShow");
         OkGo.post(UrlUtil.getUrl(UrpUrl.URL_PG)).params(httpParams).tag(tag).execute(new JsoupCallBack() {
             @Override
-            public void onSuccess(Document document, Call call, Response response) {
+            public void onSuccess(Document document) {
                 pg_2(tag, pgInfoModels, isZq, jsoupCallBack);
             }
         });

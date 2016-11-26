@@ -1,6 +1,5 @@
 package com.jin123d.urp;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -39,7 +38,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private ProgressBar pgb_yzm;
     private String zjh;
     private String mm;
-    private ProgressDialog progressDialog;
     private CheckBox chb_mm;
     private CheckBox chk_auto;
     private LinearLayout lin_main;
@@ -63,10 +61,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         img_yzm = (ImageView) findViewById(R.id.img_yzm);
         lin_main = (LinearLayout) findViewById(R.id.lin_main);
         pgb_yzm.setVisibility(View.GONE);
-        progressDialog = new ProgressDialog(LoginActivity.this);
-        progressDialog.setMessage(getText(R.string.logining));
-        progressDialog.setCancelable(false);
-        progressDialog.setCanceledOnTouchOutside(false);
         btn_login.setOnClickListener(this);
         img_yzm.setOnClickListener(this);
         chk_auto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -107,11 +101,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.btn_login:
                 if (TextUtils.isEmpty(et_yzm.getText().toString())) {
-                    Snackbar.make(lin_main, "验证码为空", Snackbar.LENGTH_SHORT)
+                    Snackbar.make(lin_main, R.string.codeIsNull, Snackbar.LENGTH_SHORT)
                             .show();
                 } else {
-                    login();
+                    progressDialog.setMessage(getString(R.string.logining));
                     progressDialog.show();
+                    login();
                 }
                 break;
         }
@@ -130,8 +125,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
             @Override
             public void getError(String errorMsg) {
-                Snackbar.make(lin_main, getText(R.string.getYzmFail), Snackbar.LENGTH_SHORT)
-                        .show();
+                Snackbar.make(lin_main, R.string.getYzmFail, Snackbar.LENGTH_SHORT).show();
                 pgb_yzm.setVisibility(View.INVISIBLE);
             }
         });
@@ -144,7 +138,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
             @Override
             public void onSuccess(Document document, Call call, Response response) {
-                progressDialog.dismiss();
+                progressDialogDismiss();
                 JsoupUtil.isLogin(document, new UrpUserListener.UserStateListener() {
                     @Override
                     public void loginSuccess() {
@@ -166,6 +160,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                     @Override
                     public void loginFailed(String errorMsg) {
+                        progressDialogDismiss();
                         Snackbar.make(lin_main, errorMsg, Snackbar.LENGTH_SHORT).show();
                         getCode();
                     }
@@ -173,11 +168,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             }
 
             @Override
-            public void onError(ErrorCode errorCode) {
-                super.onError(errorCode);
-                progressDialog.dismiss();
-                Snackbar.make(lin_main, getText(R.string.getDataTimeOut), Snackbar.LENGTH_SHORT)
-                        .show();
+            protected void onSuccess(Document document) {
+                //登录时无用
+            }
+
+            @Override
+            public void onError(ErrorCode errorCode, Response response) {
+                super.onError(errorCode, response);
+                progressDialogDismiss();
             }
         });
 
