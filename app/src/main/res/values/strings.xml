@@ -54,4 +54,10 @@
     <string name="title_activity_test">TestActivity</string>
     <string name="codeIsNull">验证码为空</string>
 
+
+    <string name="open_source">APP开源地址:\nhttps://github.com/jin123d/urp\n\n\n\n感谢 \n\n太原理工在线教务系统\nhttp://jwc.tyut.edu.cn\n\nJsoup\nhttps://jsoup.org\n\nokhttp_okgo\nhttps://github.com/jeasonlzy/okhttp-OkGo\n\n
+        base-adapter\nhttps://github.com/hongyangAndroid/baseAdapter\n\n
+    </string>
+
+
 </resources>

@@ -5,8 +5,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -23,7 +21,6 @@ import com.jin123d.util.ErrorCode;
 import com.jin123d.util.HttpUtil;
 import com.jin123d.util.JsoupUtil;
 import com.jin123d.util.UrpSpUtil;
-import com.jin123d.util.UrpUrl;
 import com.jin123d.util.okgo.JsoupCallBack;
 
 import org.jsoup.nodes.Document;
@@ -179,27 +176,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             }
         });
 
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_login, menu);
-        return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                String str = UrpUrl.URL;
-                Snackbar.make(lin_main, str, Snackbar.LENGTH_SHORT)
-                        .show();
-                break;
-            case R.id.action_about:
-                startActivity(new Intent(this, WebActivity.class));
-                break;
-        }
-        return true;
     }
 
 }

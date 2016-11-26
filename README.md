@@ -1,6 +1,6 @@
 TyutURP 第三方客户端
 ===================================
-[APK预览](https://github.com/jin123d/URP/blob/master/pic/urp.apk?raw=true)
+[APK预览](https://github.com/jin123d/URP/blob/master/pic/urp_v1.2.apk?raw=true)
 
 ## 功能实现
 - [x] 学籍信息（实现）

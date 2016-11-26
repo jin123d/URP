@@ -3,23 +3,18 @@ package com.jin123d.urp;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.TextView;
 
-public class AboutActivity extends AppCompatActivity {
+import com.jin123d.app.BaseActivity;
+
+public class AboutActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        TextView tv_versionName = (TextView) findViewById(R.id.tv_verName);
 
-        try {
-            tv_versionName.setText(TextUtils.concat("V", getVersionName()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 
@@ -30,4 +25,18 @@ public class AboutActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void initView() {
+        TextView tv_versionName = (TextView) findViewById(R.id.tv_verName);
+        try {
+            tv_versionName.setText(TextUtils.concat("V", getVersionName()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void initData() {
+
+    }
 }

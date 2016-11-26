@@ -1,6 +1,5 @@
 package com.jin123d.urp;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -45,7 +44,6 @@ public class MainActivity extends BaseActivity {
     private ActionBarDrawerToggle drawerToggle;
     private NavigationView navigationView;
     private TextView tv_head;
-    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +54,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        progressDialog = new ProgressDialog(MainActivity.this);
         progressDialog.setMessage(getString(R.string.getUserData));
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.setCancelable(false);
         progressDialog.show();
         /**
          * 初始化各种控件
@@ -119,7 +114,7 @@ public class MainActivity extends BaseActivity {
                         break;
                     case 4:
                         //本学期课表
-                        Snackbar.make(listView, "开发中1111", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(listView, "开发中", Snackbar.LENGTH_SHORT).show();
                         break;
                     case 5:
                         //一键评教
@@ -172,7 +167,7 @@ public class MainActivity extends BaseActivity {
         HttpUtil.getXjxx(this, new JsoupCallBack() {
             @Override
             public void onSuccess(Document document) {
-                progressDialog.dismiss();
+                progressDialogDismiss();
                 Elements es = document.select("[width=275]");
                 if (es.size() > 0) {
                     tv_head.setText(TextUtils.concat(es.get(1).text(), "  ", es.get(0).text()));
@@ -185,8 +180,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onError(ErrorCode errorCode, Response response) {
                 super.onError(errorCode, response);
-                progressDialog.dismiss();
-                Toast.makeText(MainActivity.this, getString(R.string.getDataTimeOut), Toast.LENGTH_SHORT).show();
+                progressDialogDismiss();
             }
         });
     }

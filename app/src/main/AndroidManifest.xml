@@ -71,8 +71,7 @@
         <activity
             android:name=".AboutActivity"
             android:label="@string/title_activity_about"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.Cj" />
+            android:parentActivityName=".MainActivity" />
 
     </application>
 

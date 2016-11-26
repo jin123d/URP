@@ -7,8 +7,8 @@ android {
         applicationId "com.jin123d.urp"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 21
-        versionName '1.0'
+        versionCode 22
+        versionName '1.2'
     }
     buildTypes {
         release {
