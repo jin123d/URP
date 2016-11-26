@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * Created by jin123d on 2015/9/20.
- */
+ **/
 public class MainAdapter extends BaseAdapter {
     private List<MainModels> lists;
     private Context context;

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -30,10 +29,9 @@ import java.util.List;
 
 public class TzggActivity extends BaseActivity {
     private ProgressDialog progressDialog;
-    private Toolbar toolbar;
     private ListView listView;
     private List<String> lists;
-    private ArrayAdapter arrayAdapter;
+    private ArrayAdapter<String> arrayAdapter;
     private List<TzggModels> list_tz;
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
@@ -66,7 +64,7 @@ public class TzggActivity extends BaseActivity {
         listView = (ListView) findViewById(R.id.lv_news);
         lists = new ArrayList<>();
         list_tz = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter(TzggActivity.this, android.R.layout.simple_list_item_1, lists);
+        arrayAdapter = new ArrayAdapter<>(TzggActivity.this, android.R.layout.simple_list_item_1, lists);
         listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

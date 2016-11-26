@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * Created by jin123d on 2015/9/14.
- */
+ **/
 public class CjAdapter extends BaseAdapter {
     private List<CjModels> lists;
     private Context context;

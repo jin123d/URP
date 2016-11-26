@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * Created by jin123d on 2015/11/7.
- */
+ **/
 public class JxpgAdapter extends BaseAdapter {
 
     private List<JxpgModels> lists;
