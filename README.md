@@ -2,6 +2,8 @@ TyutURP 第三方客户端
 ===================================
 [APK预览](https://github.com/jin123d/URP/blob/master/pic/urp_v1.2.apk?raw=true)
 
+[太原理工-校外访问综合教务系统及教学管理系统vpn插件下载](http://jwc.tyut.edu.cn/info_show.asp?id=1791&bigid=7&smallid=48)
+
 ## 功能实现
 - [x] 学籍信息（实现）
 - [x] 成绩（实现）
@@ -118,6 +120,5 @@ TyutURP 第三方客户端
 > * 退出登录功能
 > * 及格成绩和自主实践采用baseAdapter
 
-## 我的网站  
-http://www.jin123d.com 
+
 -----------------------------------  
