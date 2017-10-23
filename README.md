@@ -2,7 +2,7 @@ TyutURP 第三方客户端
 ===================================
 [APK预览](https://github.com/jin123d/URP/blob/master/pic/urp_v1.2.apk?raw=true)
 
-[太原理工-校外访问综合教务系统及教学管理系统vpn插件下载](http://jwc.tyut.edu.cn/info_show.asp?id=1791&bigid=7&smallid=48)
+[太原理工校外访问综合教务系统及教学管理系统SSL VPN客户端程序说明](http://jwc.tyut.edu.cn/info/1057/1304.htm)
 
 ## 功能实现
 - [x] 学籍信息（实现）
